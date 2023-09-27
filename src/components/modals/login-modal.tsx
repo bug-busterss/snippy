@@ -7,15 +7,15 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
+  type useDisclosure,
 } from "@nextui-org/react";
 
-export default function App() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+export default function LoginModal({
+  isOpen,
+  onOpenChange,
+}: ReturnType<typeof useDisclosure>) {
   return (
     <>
-      <Button onPress={onOpen}>Open Modal</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
