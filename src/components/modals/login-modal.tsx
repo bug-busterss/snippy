@@ -21,7 +21,7 @@ export default function LoginModal({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                Sign in to your account
               </ModalHeader>
               <ModalBody>
                 <p>
