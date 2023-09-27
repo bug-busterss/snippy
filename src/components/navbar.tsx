@@ -10,6 +10,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import LoginModal from "./modals/login-modal";
+import SignupModal from "./modals/signup-modal";
 
 export default function SnipNav() {
   const loginModal = useDisclosure();
@@ -48,6 +49,7 @@ export default function SnipNav() {
         </NavbarContent>
       </Navbar>
       <LoginModal {...loginModal} />
+      <SignupModal {...signupModal} />
     </>
   );
 }
