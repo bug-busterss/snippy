@@ -3,8 +3,9 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { TRPCError } from "@trpc/server";
+import { Visibility } from "@prisma/client";
 
-export const snip = createTRPCRouter({
+export const protectedSnip = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
@@ -12,7 +13,7 @@ export const snip = createTRPCRouter({
         code: z.string(),
         language: z.string(),
         slug: z.string(),
-        visibility: z.string(),
+        visibility: z.nativeEnum(Visibility).default("public"),
       }),
     )
     .mutation(async ({ input, ctx }) => {
