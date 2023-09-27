@@ -4,9 +4,9 @@ import React from "react";
 import { Button, Input } from "@nextui-org/react";
 import type { Selection } from "@nextui-org/react";
 import MultiSelect from "@/components/multiselect/multi-select";
-import { VisilityOptions, languages } from "@/components/multiselect/data";
+import { VisilityOptions } from "@/components/multiselect/data";
 import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
+import { loadLanguage, langNames } from "@uiw/codemirror-extensions-langs";
 import { api } from "@/utils/api";
 import toast from "react-hot-toast";
 import { type Visibility } from "@prisma/client";
@@ -91,7 +91,8 @@ function CreateSnips() {
           label={"Language"}
           selected={language}
           className="w-2/4"
-          options={languages}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+          options={langNames.map((l) => ({ label: l, value: l }))}
         />
       </div>
       {user && (
@@ -109,7 +110,10 @@ function CreateSnips() {
         value={code}
         height="384px"
         theme={"dark"}
-        extensions={[javascript({ jsx: true })]}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        extensions={[loadLanguage(Array.from(language)[0])]}
         onChange={(e) => {
           setCode(e);
         }}
