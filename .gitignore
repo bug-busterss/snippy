@@ -43,3 +43,4 @@ yarn-error.log*
 
 #bun
 bun.lockb
+.vscode/settings.json
