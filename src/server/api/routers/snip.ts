@@ -34,7 +34,7 @@ export const snip = createTRPCRouter({
         data: {
           title,
           content,
-          slug: nanoid(),
+          slug: nanoid(7),
           language,
           visibility,
         },
@@ -89,5 +89,6 @@ export const snip = createTRPCRouter({
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+      return data;
     }),
 });
