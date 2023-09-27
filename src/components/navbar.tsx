@@ -5,7 +5,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   useDisclosure,
 } from "@nextui-org/react";
@@ -20,25 +19,8 @@ export default function SnipNav() {
     <>
       <Navbar>
         <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit">Snippy</p>
         </NavbarBrand>
-        <NavbarContent className="hidden gap-4 sm:flex" justify="center">
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link href="#" aria-current="page">
-              Customers
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
             <Button onPress={loginModal.onOpen}>Login</Button>
