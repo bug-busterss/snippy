@@ -10,9 +10,9 @@ import {
   type useDisclosure,
   Input,
 } from "@nextui-org/react";
-import { Github } from "lucide-react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
+import { GithubLoginButton } from "../buttons";
 
 interface SignupModalProps extends ReturnType<typeof useDisclosure> {
   openLoginModal: VoidFunction;
@@ -56,7 +56,7 @@ export default function SignupModal({
 
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <form
@@ -72,11 +72,7 @@ export default function SignupModal({
                 Create an account
               </ModalHeader>
               <ModalBody>
-                <div className="text-center"></div>
-                <Button color="primary" onPress={onClose}>
-                  <Github size={22} />
-                  Sign-up with GitHub
-                </Button>
+                <GithubLoginButton />
                 <p className="text-center text-sm">or continue with email</p>
 
                 <div className="mb-6 flex w-full flex-wrap items-end gap-4 md:mb-0 md:flex-nowrap">
@@ -109,7 +105,7 @@ export default function SignupModal({
                     className="outline-none"
                     key={"outside"}
                     type="Password"
-                    label="Password"
+                    label="Confirm Password"
                     labelPlacement={"outside"}
                     placeholder="Password"
                     description="Type your password again."
@@ -118,7 +114,12 @@ export default function SignupModal({
                   />
                 </div>
 
-                <Button type="submit" color="primary" isLoading={isLoading}>
+                <Button
+                  className="font-medium"
+                  type="submit"
+                  color="primary"
+                  isLoading={isLoading}
+                >
                   Sign Up
                 </Button>
                 <div className="flex justify-center gap-2">
