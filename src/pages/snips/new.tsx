@@ -16,6 +16,7 @@ import {
   removeConsecutiveHypens,
   removeConsecutiveSpaces,
 } from "@/utils/functions";
+import { githubDark } from "@uiw/codemirror-theme-github";
 
 function CreateSnips() {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -115,7 +116,8 @@ function CreateSnips() {
       <CodeMirror
         value={code}
         height="384px"
-        theme={"dark"}
+        theme={githubDark}
+        className="text-xl"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
