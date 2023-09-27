@@ -3,7 +3,7 @@ import SnipNav from "./navbar";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className="h-screen w-screen scrollbar-hide">
+    <div className="h-screen w-full scrollbar-hide">
       <SnipNav />
       {children}
     </div>
