@@ -3,6 +3,8 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { TRPCError } from "@trpc/server";
+import { Prisma } from "@prisma/client";
+import { input } from "@nextui-org/react";
 
 export const snip = createTRPCRouter({
   create: publicProcedure
@@ -63,5 +65,40 @@ export const snip = createTRPCRouter({
       });
 
       return snip;
+    }),
+  getAll: publicProcedure
+    .input(
+      z.object({
+        language: z.string().nullable(),
+      }),
+    )
+    .query(async ({ input }) => {
+      //Fetching public Snips Based on Language
+      if (input.language) {
+        const data = await db.snips.findMany({
+          where: {
+            visibility: "public",
+            language: input.language,
+          },
+        });
+
+        if (!data)
+          throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+
+        return data;
+      }
+      //Fetch All Public Snips
+      const data = await db.snips.findMany({
+        where: {
+          visibility: "public",
+        },
+      });
+      if (!data) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No Data",
+        });
+      }
+      return data;
     }),
 });
