@@ -10,14 +10,14 @@ import { javascript } from "@codemirror/lang-javascript";
 import { api } from "@/utils/api";
 import toast from "react-hot-toast";
 import { githubDark } from "@uiw/codemirror-theme-github";
-const CreateSnips = () => {
+const CreateSnips = (props) => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState<string>("");
   const [title, setTitle] = useState<string>("Untitled Snip");
   const [slug, setSlug] = useState<string>("");
 
-  const { mutate } = api.snip.create.useMutation({
+  const { mutate } = api.snip.createAnon.useMutation({
     onSuccess: (data) => {
       console.log(data);
       toast.success("Snip Created");

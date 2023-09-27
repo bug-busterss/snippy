@@ -9,6 +9,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { api } from "@/utils/api";
 import toast from "react-hot-toast";
+import { type Visibility } from "@prisma/client";
 
 const CreateSnips = (props) => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -17,7 +18,7 @@ const CreateSnips = (props) => {
   const [title, setTitle] = useState<string>("Untitled Snip");
   const [slug, setSlug] = useState<string>("");
 
-  const { mutate } = api.snip.create.useMutation({
+  const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
     onSuccess: (data) => {
       console.log(data);
       toast.success("Snip Created");
@@ -28,9 +29,31 @@ const CreateSnips = (props) => {
       toast.error(error.message);
     },
   });
+  const { mutate } = api.protectedSnip.create.useMutation({
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success("Snip Created");
+    },
+
+    onError: (error) => {
+      console.log(error);
+      toast.error(error.message);
+    },
+  });
+  function handleSaveAnon() {
+    const newLanguage = Array.from(language)[0] as string;
+    const newVisibility = Array.from(visibility)[0] as Visibility;
+    mutateAnon({
+      title,
+      code,
+      language: newLanguage,
+      visibility: newVisibility,
+      slug,
+    });
+  }
   function handleSave() {
     const newLanguage = Array.from(language)[0] as string;
-    const newVisibility = Array.from(visibility)[0] as string;
+    const newVisibility = Array.from(visibility)[0] as Visibility;
     mutate({
       title,
       code,
@@ -89,7 +112,7 @@ const CreateSnips = (props) => {
       {/* <TextArea /> */}
       <div className="flex w-full gap-2">
         <Button onClick={handleSave}>Save</Button>
-        <Button>Save Anonymously</Button>
+        <Button onClick={handleSaveAnon}>Save Anonymously</Button>
       </div>
     </main>
   );
