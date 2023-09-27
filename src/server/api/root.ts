@@ -1,5 +1,6 @@
 import { snip } from "@/server/api/routers/snip";
 import { createTRPCRouter } from "@/server/api/trpc";
+import { protectedSnip } from "@/server/api/routers/protected-snips";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { createTRPCRouter } from "@/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   snip,
+  protectedSnip,
 });
 
 // export type definition of API
