@@ -5,44 +5,62 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
-  Tooltip,
+  useDisclosure,
 } from "@nextui-org/react";
-import { Plus } from "lucide-react";
+import LoginModal from "./modals/login-modal";
+import SignupModal from "./modals/signup-modal";
+import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 export default function SnipNav() {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
+  const user = useUser();
+  const loginModal = useDisclosure();
+  const signupModal = useDisclosure();
+
   return (
-    <Navbar className="" maxWidth="full">
-      <NavbarBrand>
-        <p className="font-bold text-inherit">Snippy</p>
-      </NavbarBrand>
-      <NavbarContent justify="end">
-        {/* <NavbarItem>
-          <Link color="foreground" href="#">
-            <Tooltip
-              color="default"
-              showArrow={true}
-              content="Create Snip"
-              isOpen={isOpen}
-              onOpenChange={(open) => setIsOpen(open)}
-            >
-              <Button color="primary" variant="flat">
-                <Plus />
-              </Button>
-            </Tooltip>
-          </Link>
-        </NavbarItem> */}
-        <NavbarItem className="hidden lg:flex">
-          <Button>Login</Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Button color="primary" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+    <>
+      <Navbar>
+        <NavbarBrand>
+          <p className="font-bold text-inherit">Snippy</p>
+        </NavbarBrand>
+        <NavbarContent justify="end">
+          {!user ? (
+            <>
+              <NavbarItem className="hidden lg:flex">
+                <Button onPress={loginModal.onOpen}>Login</Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button onPress={signupModal.onOpen}>Sign Up</Button>
+              </NavbarItem>
+            </>
+          ) : (
+            <>
+              <NavbarItem>
+                <Button
+                  onPress={() => {
+                    // TODO Logout confirmation modal by @Tejash429 or @Adnanarodiya
+                  }}
+                >
+                  Logout
+                </Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button
+                  onPress={() => {
+                    // TODO Redirect to user profile page by anyone
+                  }}
+                >
+                  My Profile
+                </Button>
+              </NavbarItem>
+            </>
+          )}
+        </NavbarContent>
+      </Navbar>
+      <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />
+      <SignupModal {...signupModal} openLoginModal={loginModal.onOpen} />
+    </>
   );
 }

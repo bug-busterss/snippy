@@ -1,32 +1,46 @@
-import { AppProps, type AppType } from "next/app";
+import { type AppProps } from "next/app";
 
 import { api } from "@/utils/api";
 import { NextUIProvider } from "@nextui-org/react";
 
 import "@/styles/globals.css";
 import { ThemeProvider } from "next-themes";
-import { ReactElement, ReactNode } from "react";
-import { NextPage } from "next";
+import { useState, type ReactElement, type ReactNode } from "react";
+import { type NextPage } from "next";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import {
+  SessionContextProvider,
+  type Session,
+} from "@supabase/auth-helpers-react";
+import { Toaster } from "react-hot-toast";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout = AppProps<{ initialSession: Session }> & {
   Component: NextPageWithLayout;
 };
 
-const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
   const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
-    <NextUIProvider>
-      <ThemeProvider attribute="class" defaultTheme="dark">
-        <main className="bg-background text-foreground dark">
-          {getLayout(<Component {...pageProps} />)}
-        </main>
-      </ThemeProvider>
-    </NextUIProvider>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <NextUIProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          <main className="bg-background text-foreground dark">
+            <Toaster />
+            {getLayout(<Component {...pageProps} />)}
+          </main>
+        </ThemeProvider>
+      </NextUIProvider>
+    </SessionContextProvider>
   );
-};
+}
 
 export default api.withTRPC(MyApp);
