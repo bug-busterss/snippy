@@ -10,8 +10,10 @@ import {
 } from "@nextui-org/react";
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
+import { useUser } from "@supabase/auth-helpers-react";
 
 export default function SnipNav() {
+  const user = useUser();
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
 
@@ -21,14 +23,16 @@ export default function SnipNav() {
         <NavbarBrand>
           <p className="font-bold text-inherit">Snippy</p>
         </NavbarBrand>
-        <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Button onPress={loginModal.onOpen}>Login</Button>
-          </NavbarItem>
-          <NavbarItem>
-            <Button onPress={signupModal.onOpen}>Sign Up</Button>
-          </NavbarItem>
-        </NavbarContent>
+        {!user && (
+          <NavbarContent justify="end">
+            <NavbarItem className="hidden lg:flex">
+              <Button onPress={loginModal.onOpen}>Login</Button>
+            </NavbarItem>
+            <NavbarItem>
+              <Button onPress={signupModal.onOpen}>Sign Up</Button>
+            </NavbarItem>
+          </NavbarContent>
+        )}
       </Navbar>
       <LoginModal {...loginModal} />
       <SignupModal {...signupModal} />
