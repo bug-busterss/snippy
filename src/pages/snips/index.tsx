@@ -1,14 +1,10 @@
-import { useState, type ReactElement, createRef } from "react";
+import { useState, type ReactElement } from "react";
 import Layout from "@/components/layout";
 import React from "react";
 import { Button, Input } from "@nextui-org/react";
 import type { Selection } from "@nextui-org/react";
 import MultiSelect from "@/components/multiselect/multi-select";
-import {
-  VisilityOptions,
-  languages,
-  tagsOptions,
-} from "@/components/multiselect/data";
+import { VisilityOptions, languages } from "@/components/multiselect/data";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { api } from "@/utils/api";
@@ -17,9 +13,8 @@ import toast from "react-hot-toast";
 const CreateSnips = () => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
-  const [tags, setTags] = useState<Selection>(new Set([]));
   const [code, setCode] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string>("Untitled Snip");
   const [slug, setSlug] = useState<string>("");
 
   const { mutate } = api.snip.create.useMutation({
