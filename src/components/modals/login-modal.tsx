@@ -57,9 +57,11 @@ export default function LoginModal({
           {(onClose) => (
             <form
               onSubmit={async (e) => {
-                e.preventDefault();
-                await handleSubmit();
-                onClose();
+                try {
+                  e.preventDefault();
+                  await handleSubmit();
+                  onClose();
+                } catch {}
               }}
             >
               <ModalHeader className=" flex flex-col gap-1 text-center">
