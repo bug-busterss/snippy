@@ -3,14 +3,18 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const snip = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  create: publicProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        code: z.string(),
+        language: z.string(),
+        slug: z.string(),
+        visibility: z.string(),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {};
     }),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.example.findMany();
-  }),
 });
