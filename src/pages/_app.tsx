@@ -7,7 +7,6 @@ import "@/styles/globals.css";
 import { ThemeProvider } from "next-themes";
 import { useState, type ReactElement, type ReactNode } from "react";
 import { type NextPage } from "next";
-import { Toaster } from "react-hot-toast";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import {
   SessionContextProvider,
