@@ -1,3 +1,4 @@
+import { type PropsWithChildren } from "react";
 import SnipNav from "./navbar";
 import { ThemeSwitcher } from "./theme-switcher";
 import { ReactElement } from "react";
