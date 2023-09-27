@@ -39,13 +39,11 @@ export default function SnipNav() {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex" onClick={loginModal.onOpen}>
-            <Link href="#">Login</Link>
+          <NavbarItem className="hidden lg:flex">
+            <Button onPress={loginModal.onOpen}>Login</Button>
           </NavbarItem>
-          <NavbarItem onClick={signupModal.onOpen}>
-            <Button as={Link} color="primary" href="#" variant="flat">
-              Sign Up
-            </Button>
+          <NavbarItem>
+            <Button onPress={signupModal.onOpen}>Sign Up</Button>
           </NavbarItem>
         </NavbarContent>
       </Navbar>
