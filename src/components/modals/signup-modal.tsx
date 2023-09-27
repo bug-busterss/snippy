@@ -13,7 +13,6 @@ import {
 import { Github } from "lucide-react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
 
 interface SignupModalProps extends ReturnType<typeof useDisclosure> {
   openLoginModal: VoidFunction;
@@ -24,7 +23,6 @@ export default function SignupModal({
   onOpenChange,
   openLoginModal,
 }: SignupModalProps) {
-  const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,7 +51,6 @@ export default function SignupModal({
       toast.success(
         `Sent a confirmation email at ${data.user?.email}. Open the link to login.`,
       );
-      await router.push("/snips");
     }
   }
 

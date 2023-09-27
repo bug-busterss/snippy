@@ -11,8 +11,10 @@ import {
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
 import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 export default function SnipNav() {
+  const router = useRouter();
   const user = useUser();
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
@@ -23,16 +25,39 @@ export default function SnipNav() {
         <NavbarBrand>
           <p className="font-bold text-inherit">Snippy</p>
         </NavbarBrand>
-        {!user && (
-          <NavbarContent justify="end">
-            <NavbarItem className="hidden lg:flex">
-              <Button onPress={loginModal.onOpen}>Login</Button>
-            </NavbarItem>
-            <NavbarItem>
-              <Button onPress={signupModal.onOpen}>Sign Up</Button>
-            </NavbarItem>
-          </NavbarContent>
-        )}
+        <NavbarContent justify="end">
+          {!user ? (
+            <>
+              <NavbarItem className="hidden lg:flex">
+                <Button onPress={loginModal.onOpen}>Login</Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button onPress={signupModal.onOpen}>Sign Up</Button>
+              </NavbarItem>
+            </>
+          ) : (
+            <>
+              <NavbarItem>
+                <Button
+                  onPress={() => {
+                    // TODO Logout confirmation modal by @Tejash429 or @Adnanarodiya
+                  }}
+                >
+                  Logout
+                </Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button
+                  onPress={() => {
+                    // TODO Redirect to user profile page by anyone
+                  }}
+                >
+                  My Profile
+                </Button>
+              </NavbarItem>
+            </>
+          )}
+        </NavbarContent>
       </Navbar>
       <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />
       <SignupModal {...signupModal} openLoginModal={loginModal.onOpen} />
