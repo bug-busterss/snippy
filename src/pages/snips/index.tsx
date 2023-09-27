@@ -12,6 +12,7 @@ import {
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { api } from "@/utils/api";
+import toast from "react-hot-toast";
 
 const CreateSnips = () => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -24,10 +25,12 @@ const CreateSnips = () => {
   const { mutate } = api.snip.create.useMutation({
     onSuccess: (data) => {
       console.log(data);
+      toast.success("Snip Created");
     },
 
     onError: (error) => {
       console.log(error);
+      toast.error("Error Creating Snip");
     },
   });
   function handleSave() {
