@@ -12,6 +12,10 @@ import toast from "react-hot-toast";
 import { type Visibility } from "@prisma/client";
 import { useUser } from "@supabase/auth-helpers-react";
 import VisibilitySelect from "@/components/multiselect/visibiltySelect";
+import {
+  removeConsecutiveHypens,
+  removeConsecutiveSpaces,
+} from "@/utils/functions";
 
 function CreateSnips() {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -73,7 +77,9 @@ function CreateSnips() {
         defaultValue={title}
         onChange={(e) => {
           setTitle(e.target.value);
-          setSlug(e.target.value.toLowerCase().replace(/\s/g, "-"));
+          let jod = removeConsecutiveSpaces(e.target.value).toLowerCase();
+          jod = removeConsecutiveHypens(e.target.value);
+          setSlug(jod.replace(/[-\s]+/g, "-"));
         }}
         label="Snip Title"
         radius="md"
