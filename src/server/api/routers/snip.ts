@@ -3,11 +3,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { TRPCError } from "@trpc/server";
-import { Prisma } from "@prisma/client";
-import { input } from "@nextui-org/react";
 
 export const snip = createTRPCRouter({
-  create: publicProcedure
+  createAnon: publicProcedure
     .input(
       z.object({
         title: z.string(),
@@ -111,6 +109,7 @@ export const snip = createTRPCRouter({
       const data = await db.snips.findUnique({
         where: {
           slug: input.slug,
+          visibility: "public",
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
