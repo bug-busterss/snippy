@@ -25,13 +25,13 @@ export default function Landing() {
         </div>
         <div>
           <Button
+            as={Link}
             color="primary"
-            className="inline-flex h-14 items-center justify-center rounded-full px-3 py-6 text-lg font-medium"
+            className="flex h-14 items-center justify-center gap-1 rounded-full px-3 py-6 text-lg font-medium"
+            href="/snips/new"
           >
-            <Link href="/snips" className="flex justify-around text-center">
-              <span className="pl-1">Get Started</span>
-              <ChevronRight size={25} />
-            </Link>
+            <span>Get Started</span>
+            <ChevronRight size={25} />
           </Button>
         </div>
         <div className="grid grid-flow-col gap-4 ">
