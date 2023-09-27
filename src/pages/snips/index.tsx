@@ -1,10 +1,4 @@
-import {
-  useState,
-  type ReactElement,
-  ChangeEventHandler,
-  useRef,
-  createRef,
-} from "react";
+import { useState, type ReactElement, createRef } from "react";
 import Layout from "@/components/layout";
 import React from "react";
 import { Button, Input } from "@nextui-org/react";
@@ -27,21 +21,21 @@ const CreateSnips = () => {
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
 
-  const { mutate } = api.snip.create.useMutation({
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  // const { mutate } = api.snip.create.useMutation({
+  //   onSuccess: (data) => {
+  //     console.log(data);
+  //   },
+  // });
   function handleSave() {
     const newLanguage = Array.from(language)[0] as string;
     const newVisibility = Array.from(visibility)[0] as string;
-    mutate({
-      title,
-      code,
-      language: newLanguage,
-      visibility: newVisibility,
-      slug,
-    });
+    // mutate({
+    //   title,
+    //   code,
+    //   language: newLanguage,
+    //   visibility: newVisibility,
+    //   slug,
+    // });
   }
 
   return (
@@ -103,6 +97,7 @@ const CreateSnips = () => {
     const [scrollPos, setScrollPos] = useState<number>(0);
     const linesComp: React.Ref<HTMLDivElement> = createRef();
     function handleTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+      console.log(e.target.value.split("\n").length);
       setLines([...lines, e.target.value.split("\n").length]);
     }
     function handleScroll(e: React.UIEvent<HTMLTextAreaElement>) {
@@ -115,7 +110,7 @@ const CreateSnips = () => {
     return (
       <div className="w-full">
         <div
-          className="absolute left-12 top-[17.5rem] h-[19rem] overflow-scroll scrollbar-hide "
+          className="absolute left-12 top-[22rem] h-[19rem] overflow-scroll scrollbar-hide "
           ref={linesComp}
         >
           {lines.map((line, key) => (

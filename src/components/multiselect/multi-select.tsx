@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Select, SelectItem, type Selection } from "@nextui-org/react";
-import { VisilityOptions } from "./data";
 
 interface MultiSelectProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string;

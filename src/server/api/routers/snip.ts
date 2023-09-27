@@ -16,19 +16,7 @@ export const snip = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const jod = await db
-        .insert(snips)
-        .values({
-          slug: input.slug,
-          title: input.title,
-          code: input.code,
-          language: input.language,
-          visibility: input.visibility,
-        })
-        .returning({
-          id: snips.id,
-        });
-
-      return jod;
+      // const jod = await prisma
+      // return jod;
     }),
 });
