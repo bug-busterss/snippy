@@ -13,7 +13,7 @@ export const VisilityOptions = [
   },
   {
     label: "Protected",
-    value: "protected",
+    value: "unlisted",
     checked: false,
   },
 ];
