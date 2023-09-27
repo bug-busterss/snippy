@@ -9,7 +9,6 @@ interface cardComponentProps {
 }
 
 export default function CardComponent(props: cardComponentProps) {
-  console.log(props.isBorder);
   return (
     <Card
       className={`max-w-md bg-gradient-to-b from-[#331b55] to-[#15162c]  p-2 ${
