@@ -3,7 +3,7 @@
 import { nextui } from "@nextui-org/react";
 
 module.exports = {
-  darkMode: ["class"],
+  darkMode: ["dark"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
