@@ -1,12 +1,13 @@
-import { type AppProps } from "next/app";
+import { type type AppProps } from "next/app";
 
 import { api } from "@/utils/api";
 import { NextUIProvider } from "@nextui-org/react";
 
 import "@/styles/globals.css";
 import { ThemeProvider } from "next-themes";
-import { useState, type ReactElement, type ReactNode } from "react";
-import { type NextPage } from "next";
+import { type useState, type ReactElement, type  ReactNode } from "react";
+import { type  NextPage } from "next";
+import { Toaster } from "react-hot-toast";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import {
   SessionContextProvider,
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <ThemeProvider attribute="class" defaultTheme="dark">
           <main className="bg-background text-foreground dark">
             {getLayout(<Component {...pageProps} />)}
+          <Toaster position="bottom-right" reverseOrder={false} />
           </main>
         </ThemeProvider>
       </NextUIProvider>

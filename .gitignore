@@ -40,3 +40,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+#bun
+
+*.lockb
+
+.vscode/settings.json
