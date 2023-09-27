@@ -13,7 +13,7 @@ import {
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { GithubLoginButton } from "../buttons";
+import { GithubLoginButton, GoogleLoginButton } from "../buttons";
 
 interface LoginModalProps extends ReturnType<typeof useDisclosure> {
   openSignUpModal: VoidFunction;
@@ -68,7 +68,9 @@ export default function LoginModal({
                 Sign in to your account
               </ModalHeader>
               <ModalBody>
+                <GoogleLoginButton />
                 <GithubLoginButton />
+
                 <p className="text-center text-sm">or continue with email</p>
 
                 <div className="mb-6 flex w-full flex-wrap items-end gap-4 md:mb-0 md:flex-nowrap">
