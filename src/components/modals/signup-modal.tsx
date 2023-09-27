@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import { Github } from "lucide-react";
 
-export default function signupModal({
+export default function SignupModal({
   isOpen,
   onOpenChange,
 }: ReturnType<typeof useDisclosure>) {
