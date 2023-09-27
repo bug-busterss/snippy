@@ -52,7 +52,6 @@ const CreateSnips = (props) => {
       code,
       language: newLanguage,
       visibility: newVisibility,
-      slug,
     });
   }
   function handleSave() {
