@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { TRPCError } from "@trpc/server";
+import { Visibility } from "@prisma/client";
 
 export const snip = createTRPCRouter({
   createAnon: publicProcedure
@@ -12,7 +13,7 @@ export const snip = createTRPCRouter({
         code: z.string(),
         language: z.string(),
         slug: z.string(),
-        visibility: z.string(),
+        visibility: z.nativeEnum(Visibility).default("public"),
       }),
     )
     .mutation(async ({ input }) => {
@@ -52,7 +53,7 @@ export const snip = createTRPCRouter({
           message: "Slug already exists",
         });
 
-      const snip = await db.snips.create({
+      return await db.snips.create({
         data: {
           title,
           content,
@@ -61,8 +62,6 @@ export const snip = createTRPCRouter({
           visibility,
         },
       });
-
-      return snip;
     }),
   getAll: publicProcedure
     .input(
