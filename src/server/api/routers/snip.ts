@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import { nanoid } from "nanoid";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { TRPCError } from "@trpc/server";
@@ -18,12 +18,6 @@ export const snip = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { title, code: content, language, slug, visibility } = input;
-      const slugExists = await db.snips.findFirst({
-        where: {
-          slug,
-        },
-      });
-
       if (!content) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -47,17 +41,12 @@ export const snip = createTRPCRouter({
           code: "BAD_REQUEST",
           message: "Slug cannot start with whitespace",
         });
-      if (slugExists)
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Slug already exists",
-        });
 
       return await db.snips.create({
         data: {
           title,
           content,
-          slug,
+          slug: nanoid(),
           language,
           visibility,
         },

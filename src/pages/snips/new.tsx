@@ -115,8 +115,10 @@ const CreateSnips = (props) => {
       />
       {/* <TextArea /> */}
       <div className="flex w-full gap-2">
-        <Button onClick={handleSave}>Save</Button>
-        <Button onClick={handleSaveAnon}>Save Anonymously</Button>
+        {user && <Button onClick={handleSave}>Save</Button>}
+        <Button onClick={handleSaveAnon}>
+          {user ? "Save Anonymously" : "Save"}
+        </Button>
       </div>
     </main>
   );

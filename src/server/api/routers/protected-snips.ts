@@ -4,6 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
 import { TRPCError } from "@trpc/server";
 import { Visibility } from "@prisma/client";
+import { nanoid } from "nanoid";
 
 export const protectedSnip = createTRPCRouter({
   create: protectedProcedure
@@ -36,12 +37,6 @@ export const protectedSnip = createTRPCRouter({
           message: "Language is required",
         });
       }
-      if (!slug) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Slug is required",
-        });
-      }
       if (/\s/g.test(slug))
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -52,12 +47,11 @@ export const protectedSnip = createTRPCRouter({
           code: "BAD_REQUEST",
           message: "Slug already exists",
         });
-
       return await db.snips.create({
         data: {
           title,
           content,
-          slug,
+          slug: slug.trim() ? nanoid() : slug,
           language,
           visibility,
           userId: ctx.user.id,
