@@ -25,7 +25,7 @@ const CreateSnips = () => {
 
     onError: (error) => {
       console.log(error);
-      toast.error("Error Creating Snip");
+      toast.error(error.message);
     },
   });
   function handleSave() {
@@ -80,7 +80,7 @@ const CreateSnips = () => {
       <CodeMirror
         value={code}
         height="384px"
-        theme={"light"}
+        theme={"dark"}
         extensions={[javascript({ jsx: true })]}
         onChange={(e) => {
           setCode(e);
