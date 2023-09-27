@@ -1,5 +1,5 @@
 import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm/sql";
+import { sql } from "drizzle-orm";
 
 export const snips = pgTable("snips", {
   id: serial("id")
@@ -8,6 +8,8 @@ export const snips = pgTable("snips", {
 
   title: text("title").default("Untitled Snip"),
   code: text("code"),
+  language: text("language"),
+  visibility: text("visibility").default("public"),
   createdAt: timestamp("created_at").default(sql`now()`),
   updatedAt: timestamp("updated_at").default(sql`now()`),
   slug: varchar("slug", { length: 72 }).notNull(),
