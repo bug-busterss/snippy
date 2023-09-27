@@ -11,7 +11,7 @@ interface MultiSelectProps extends React.ComponentPropsWithoutRef<"div"> {
   options: { label: string; value: string; checked?: boolean }[];
 }
 
-export default function MultiSelect({
+export default function VisibilitySelect({
   label,
   selected,
   setValues,
@@ -32,14 +32,14 @@ export default function MultiSelect({
         onSelectionChange={setValues}
       >
         {!user
-          ? VisilityOptionsAuth.map((option) => {
+          ? VisilityOptions.map((option) => {
               return (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
               );
             })
-          : VisilityOptions.map((option) => {
+          : VisilityOptionsAuth.map((option) => {
               return (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

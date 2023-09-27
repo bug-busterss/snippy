@@ -11,6 +11,7 @@ import { api } from "@/utils/api";
 import toast from "react-hot-toast";
 import { type Visibility } from "@prisma/client";
 import { useUser } from "@supabase/auth-helpers-react";
+import VisibilitySelect from "@/components/multiselect/visibiltySelect";
 
 const CreateSnips = (props) => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -19,6 +20,7 @@ const CreateSnips = (props) => {
   const [title, setTitle] = useState<string>("Untitled Snip");
   const [slug, setSlug] = useState<string>("");
   const user = useUser();
+  console.log(user);
 
   const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
     onSuccess: (data) => {
@@ -78,7 +80,7 @@ const CreateSnips = (props) => {
         radius="md"
       />
       <div className="flex w-full gap-4">
-        <MultiSelect
+        <VisibilitySelect
           selected={visibility}
           setValues={setVisibility}
           options={VisilityOptions}

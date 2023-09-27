@@ -30,17 +30,6 @@ export const snip = createTRPCRouter({
           message: "Language is required",
         });
       }
-      if (!slug) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Slug is required",
-        });
-      }
-      if (/\s/g.test(slug))
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Slug cannot start with whitespace",
-        });
 
       return await db.snips.create({
         data: {
