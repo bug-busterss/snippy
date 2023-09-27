@@ -34,8 +34,8 @@ export default function SnipNav() {
           </NavbarContent>
         )}
       </Navbar>
-      <LoginModal {...loginModal} />
-      <SignupModal {...signupModal} />
+      <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />
+      <SignupModal {...signupModal} openLoginModal={loginModal.onOpen} />
     </>
   );
 }

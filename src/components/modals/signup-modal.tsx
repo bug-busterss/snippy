@@ -1,4 +1,4 @@
-import React, { type FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "@nextui-org/react";
 import {
   Modal,
@@ -15,16 +15,21 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 
+interface SignupModalProps extends ReturnType<typeof useDisclosure> {
+  openLoginModal: VoidFunction;
+}
+
 export default function SignupModal({
   isOpen,
   onOpenChange,
-}: ReturnType<typeof useDisclosure>) {
+  openLoginModal,
+}: SignupModalProps) {
   const router = useRouter();
+  const supabaseClient = useSupabaseClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const supabaseClient = useSupabaseClient();
 
   async function handleSubmit() {
     if (password !== repeatPassword) {
@@ -123,7 +128,15 @@ export default function SignupModal({
                   <p className="text-center text-sm">
                     Already have an account yet?{" "}
                   </p>
-                  <Link href="#" className="text-sm" underline="hover">
+                  <Link
+                    color="primary"
+                    className="cursor-pointer text-sm"
+                    underline="hover"
+                    onPress={() => {
+                      onClose();
+                      openLoginModal();
+                    }}
+                  >
                     Sign In
                   </Link>
                 </div>
