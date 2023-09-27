@@ -13,6 +13,7 @@ import {
   SessionContextProvider,
   type Session,
 } from "@supabase/auth-helpers-react";
+import { Toaster } from "react-hot-toast";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <NextUIProvider>
         <ThemeProvider attribute="class" defaultTheme="dark">
           <main className="bg-background text-foreground dark">
+            <Toaster />
             {getLayout(<Component {...pageProps} />)}
             <Toaster position="bottom-right" reverseOrder={false} />
           </main>
