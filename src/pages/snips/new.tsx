@@ -13,14 +13,14 @@ import { type Visibility } from "@prisma/client";
 import { useUser } from "@supabase/auth-helpers-react";
 import VisibilitySelect from "@/components/multiselect/visibiltySelect";
 
-const CreateSnips = (props) => {
+function CreateSnips() {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
-  const [code, setCode] = useState<string>("");
-  const [title, setTitle] = useState<string>("Untitled Snip");
-  const [slug, setSlug] = useState<string>("");
+  const [code, setCode] = useState("");
+  const [title, setTitle] = useState("Untitled Snip");
+  const [slug, setSlug] = useState("");
   const user = useUser();
-  console.log(user);
+  // console.log(user);
 
   const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
     onSuccess: (data) => {
@@ -114,7 +114,6 @@ const CreateSnips = (props) => {
           setCode(e);
         }}
       />
-      {/* <TextArea /> */}
       <div className="flex w-full gap-2">
         {user && <Button onClick={handleSave}>Save</Button>}
         <Button onClick={handleSaveAnon}>
@@ -123,7 +122,7 @@ const CreateSnips = (props) => {
       </div>
     </main>
   );
-};
+}
 
 export default CreateSnips;
 
