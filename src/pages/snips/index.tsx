@@ -8,20 +8,52 @@ import {
 import Layout from "@/components/layout";
 import React from "react";
 import { Button, Input } from "@nextui-org/react";
+import type { Selection } from "@nextui-org/react";
 import MultiSelect from "@/components/multiselect/multi-select";
 import {
   VisilityOptions,
   languages,
   tagsOptions,
 } from "@/components/multiselect/data";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
+import { api } from "@/utils/api";
 
 const CreateSnips = () => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
-  const [language, setLanguage] = useState<Selection>();
-  const [tags, setTags] = useState<Selection>();
+  const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
+  const [tags, setTags] = useState<Selection>(new Set([]));
+  const [code, setCode] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
+
+  const { mutate } = api.snip.create.useMutation();
+  function handleSave() {
+    const newLanguage = Array.from(language)[0] as string;
+    const newVisibility = Array.from(visibility)[0] as string;
+    mutate({
+      title,
+      description,
+      code,
+      language: newLanguage,
+      visibility: newVisibility,
+      slug,
+    });
+  }
+
   return (
     <main className="flex h-full w-full flex-col gap-4 bg-background p-8">
-      <Input type="text" label="Snip Title" radius="md" />
+      <Input
+        type="text"
+        defaultValue={title}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          setSlug(e.target.value.toLowerCase().replace(/\s/g, "-"));
+        }}
+        label="Snip Title"
+        radius="md"
+      />
       <div className="flex w-full gap-4">
         <MultiSelect
           selected={visibility}
@@ -33,21 +65,39 @@ const CreateSnips = () => {
         <MultiSelect
           setValues={setLanguage}
           label={"Language"}
-          values={language}
+          selected={language}
           className="w-2/4"
           options={languages}
         />
         <MultiSelect
           label={"Tags"}
           setValues={setTags}
-          values={tags}
+          selected={tags}
           options={tagsOptions}
           className="w-2/4"
         />
       </div>
-      <TextArea />
+      <Input
+        type="text"
+        value={slug}
+        onChange={(e) => {
+          setSlug(e.target.value);
+        }}
+        label="Slug"
+        radius="md"
+      />
+      <CodeMirror
+        value={code}
+        height="384px"
+        theme={"light"}
+        extensions={[javascript({ jsx: true })]}
+        onChange={(e) => {
+          setCode(e);
+        }}
+      />
+      {/* <TextArea /> */}
       <div className="flex w-full gap-2">
-        <Button>Save</Button>
+        <Button onClick={handleSave}>Save</Button>
         <Button>Save Anonymously</Button>
       </div>
     </main>
