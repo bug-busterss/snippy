@@ -12,12 +12,11 @@ export const snip = createTRPCRouter({
         title: z.string(),
         code: z.string(),
         language: z.string(),
-        slug: z.string(),
         visibility: z.nativeEnum(Visibility).default("public"),
       }),
     )
     .mutation(async ({ input }) => {
-      const { title, code: content, language, slug, visibility } = input;
+      const { title, code: content, language, visibility } = input;
       if (!content) {
         throw new TRPCError({
           code: "BAD_REQUEST",
