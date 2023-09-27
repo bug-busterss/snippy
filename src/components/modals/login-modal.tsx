@@ -6,7 +6,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  type useDisclosure,
+  useDisclosure,
   Input,
   Link,
 } from "@nextui-org/react";
@@ -14,11 +14,13 @@ import { Github } from "lucide-react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import SignupModal from "./signup-modal";
 
 export default function LoginModal({
   isOpen,
   onOpenChange,
 }: ReturnType<typeof useDisclosure>) {
+  const signUpModal = useDisclosure();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -106,7 +108,12 @@ export default function LoginModal({
                   <p className="text-center text-sm">
                     Do you have an account yet?
                   </p>
-                  <Link className="text-sm" underline="hover">
+                  <Link
+                    href="#"
+                    color="primary"
+                    className="text-sm"
+                    underline="hover"
+                  >
                     Sign Up
                   </Link>
                 </div>
@@ -116,6 +123,7 @@ export default function LoginModal({
           )}
         </ModalContent>
       </Modal>
+      <SignupModal {...signUpModal} />
     </>
   );
 }
