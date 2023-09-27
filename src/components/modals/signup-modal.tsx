@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "@nextui-org/react";
 import {
   Modal,
   ModalContent,
@@ -9,6 +8,7 @@ import {
   Button,
   type useDisclosure,
   Input,
+  Link,
 } from "@nextui-org/react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
