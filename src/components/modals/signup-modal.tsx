@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
-import { GithubLoginButton } from "../buttons";
+import { GithubLoginButton, GoogleLoginButton } from "../buttons";
 
 interface SignupModalProps extends ReturnType<typeof useDisclosure> {
   openLoginModal: VoidFunction;
@@ -72,6 +72,7 @@ export default function SignupModal({
                 Create an account
               </ModalHeader>
               <ModalBody>
+                <GoogleLoginButton />
                 <GithubLoginButton />
                 <p className="text-center text-sm">or continue with email</p>
 
