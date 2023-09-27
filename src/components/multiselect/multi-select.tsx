@@ -3,7 +3,7 @@ import React from "react";
 import { Select, SelectItem, type Selection } from "@nextui-org/react";
 import { VisilityOptions } from "./data";
 
-interface MultiSelectProps {
+interface MultiSelectProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string;
   selected: Selection;
   setValues: React.Dispatch<React.SetStateAction<Selection>>;
