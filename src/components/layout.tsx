@@ -5,8 +5,7 @@ export default function Layout({ children }) {
   return (
     <div className="h-screen w-screen">
       <SnipNav />
-      <ThemeSwitcher />
-      <main>{children}</main>
+      {children}
     </div>
   );
 }
