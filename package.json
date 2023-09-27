@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.1",
     "@nextui-org/react": "^2.1.13",
     "@t3-oss/env-nextjs": "^0.6.0",
     "@tanstack/react-query": "^4.32.6",
@@ -17,6 +18,7 @@
     "@trpc/next": "^10.37.1",
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
+    "@uiw/react-codemirror": "^4.21.18",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "drizzle-orm": "^0.28.5",
