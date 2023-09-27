@@ -75,7 +75,7 @@ export default function SignupModal({
                   <Github size={22} />
                   Sign-up with GitHub
                 </Button>
-                <p className="text-center text-sm">or continnue with email</p>
+                <p className="text-center text-sm">or continue with email</p>
 
                 <div className="mb-6 flex w-full flex-wrap items-end gap-4 md:mb-0 md:flex-nowrap">
                   <Input
