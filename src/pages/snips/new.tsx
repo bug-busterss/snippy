@@ -10,6 +10,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { api } from "@/utils/api";
 import toast from "react-hot-toast";
 import { type Visibility } from "@prisma/client";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const CreateSnips = (props) => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -17,6 +18,7 @@ const CreateSnips = (props) => {
   const [code, setCode] = useState<string>("");
   const [title, setTitle] = useState<string>("Untitled Snip");
   const [slug, setSlug] = useState<string>("");
+  const user = useUser();
 
   const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
     onSuccess: (data) => {
@@ -91,15 +93,17 @@ const CreateSnips = (props) => {
           options={languages}
         />
       </div>
-      <Input
-        type="text"
-        value={slug}
-        onChange={(e) => {
-          setSlug(e.target.value);
-        }}
-        label="Slug"
-        radius="md"
-      />
+      {user && (
+        <Input
+          type="text"
+          value={slug}
+          onChange={(e) => {
+            setSlug(e.target.value);
+          }}
+          label="Slug"
+          radius="md"
+        />
+      )}
       <CodeMirror
         value={code}
         height="384px"
