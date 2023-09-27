@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, useDisclosure } from "@nextui-org/react";
+import { Button, useDisclosure, Link } from "@nextui-org/react";
 import { useUser } from "@supabase/auth-helpers-react";
 import React from "react";
 
@@ -24,9 +24,19 @@ export default function NotFoundPage() {
           {user ? `you logged in as {user.email}` : `you are not logged in`}
         </p>
 
-        <Button onPress={loginModal.onOpen} color="primary" className=" w-56">
-          {user ? `Sign in as different user` : `Sign in`}
+        {!user ? (
+          <Button href="/snips" as={Link} color="primary" className=" w-56">
+            Your snips
+          </Button>
+        ) : (
+          <Button onPress={loginModal.onOpen} color="primary" className=" w-56">
+            Sign in
+          </Button>
+        )}
+        <Button href="/" as={Link} color="secondary" className="mt-6 w-56">
+          Go to dashboard
         </Button>
+
         <LoginModal {...loginModal} />
       </main>
     </>
