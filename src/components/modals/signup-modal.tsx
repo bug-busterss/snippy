@@ -105,7 +105,7 @@ export default function SignupModal({
                     className="outline-none"
                     key={"outside"}
                     type="Password"
-                    label="Password"
+                    label="Confirm Password"
                     labelPlacement={"outside"}
                     placeholder="Password"
                     description="Type your password again."
@@ -114,7 +114,12 @@ export default function SignupModal({
                   />
                 </div>
 
-                <Button type="submit" color="primary" isLoading={isLoading}>
+                <Button
+                  className="font-medium"
+                  type="submit"
+                  color="primary"
+                  isLoading={isLoading}
+                >
                   Sign Up
                 </Button>
                 <div className="flex justify-center gap-2">

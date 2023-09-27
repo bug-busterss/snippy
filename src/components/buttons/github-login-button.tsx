@@ -16,7 +16,10 @@ export function GithubLoginButton() {
     }
   }
   return (
-    <Button color="primary" onPress={loginWithGithub}>
+    <Button
+      className="bg-white font-medium text-black"
+      onPress={loginWithGithub}
+    >
       <Github size={22} />
       Login with GitHub
     </Button>

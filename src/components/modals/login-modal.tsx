@@ -100,7 +100,7 @@ export default function LoginModal({
                 </Link>
                 <Button
                   type="submit"
-                  className="bg-primary-400"
+                  className="bg-primary-400 font-medium "
                   isLoading={loading}
                 >
                   Sign In
