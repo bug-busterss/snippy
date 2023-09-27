@@ -9,7 +9,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { api } from "@/utils/api";
 import toast from "react-hot-toast";
-
+import { githubDark } from "@uiw/codemirror-theme-github";
 const CreateSnips = () => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
@@ -80,7 +80,7 @@ const CreateSnips = () => {
       <CodeMirror
         value={code}
         height="384px"
-        theme={"dark"}
+        theme={githubDark}
         extensions={[javascript({ jsx: true })]}
         onChange={(e) => {
           setCode(e);
