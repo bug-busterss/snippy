@@ -21,21 +21,25 @@ const CreateSnips = () => {
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
 
-  // const { mutate } = api.snip.create.useMutation({
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //   },
-  // });
+  const { mutate } = api.snip.create.useMutation({
+    onSuccess: (data) => {
+      console.log(data);
+    },
+
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   function handleSave() {
     const newLanguage = Array.from(language)[0] as string;
     const newVisibility = Array.from(visibility)[0] as string;
-    // mutate({
-    //   title,
-    //   code,
-    //   language: newLanguage,
-    //   visibility: newVisibility,
-    //   slug,
-    // });
+    mutate({
+      title,
+      code,
+      language: newLanguage,
+      visibility: newVisibility,
+      slug,
+    });
   }
 
   return (
@@ -91,42 +95,6 @@ const CreateSnips = () => {
       </div>
     </main>
   );
-
-  function TextArea() {
-    const [lines, setLines] = useState<number[]>([1]);
-    const [scrollPos, setScrollPos] = useState<number>(0);
-    const linesComp: React.Ref<HTMLDivElement> = createRef();
-    function handleTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-      console.log(e.target.value.split("\n").length);
-      setLines([...lines, e.target.value.split("\n").length]);
-    }
-    function handleScroll(e: React.UIEvent<HTMLTextAreaElement>) {
-      console.log(e.currentTarget.scrollTop);
-      if (linesComp) {
-        if (linesComp) return;
-      }
-    }
-
-    return (
-      <div className="w-full">
-        <div
-          className="absolute left-12 top-[22rem] h-[19rem] overflow-scroll scrollbar-hide "
-          ref={linesComp}
-        >
-          {lines.map((line, key) => (
-            <div key={key}>{line}</div>
-          ))}
-        </div>
-        <textarea
-          onScrollCapture={handleScroll}
-          onChange={handleTextChange}
-          className={`h-80 w-full overflow-auto rounded-lg bg-default-100 p-4 outline-none hover:bg-default-200 focus:bg-default-100 ${
-            lines.length < 10 ? "pl-9" : "pl-12"
-          }`}
-        />
-      </div>
-    );
-  }
 };
 
 export default CreateSnips;

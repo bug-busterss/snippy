@@ -2,7 +2,6 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { db } from "@/server/db";
-import { snips } from "@/server/db/schema";
 
 export const snip = createTRPCRouter({
   create: publicProcedure
@@ -16,7 +15,17 @@ export const snip = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      // const jod = await prisma
-      // return jod;
+      const { title, code: content, language, slug, visibility } = input;
+      const snip = await db.snips.create({
+        data: {
+          title,
+          content,
+          slug,
+          language,
+          visibility,
+        },
+      });
+
+      return snip;
     }),
 });
