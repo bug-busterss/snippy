@@ -20,6 +20,7 @@ model Snips {
   id         String     @id @default(cuid())
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  views      BigInt     @default(0)
   title      String     @default("Untitled Snip")
   content    String
   slug       String     @unique @db.VarChar(72)
