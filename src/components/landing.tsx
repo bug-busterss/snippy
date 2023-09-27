@@ -1,9 +1,7 @@
 import CardComponent from "@/components/card-comp";
-import Layout from "@/components/layout";
 import { Button } from "@nextui-org/react";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import React, { type ReactElement } from "react";
 import { useState } from "react";
 
 export default function Landing() {
@@ -30,7 +28,7 @@ export default function Landing() {
             color="primary"
             className="inline-flex h-14 items-center justify-center rounded-full px-3 py-6 text-lg font-medium"
           >
-            <Link href="#" className="flex justify-around text-center">
+            <Link href="/snips" className="flex justify-around text-center">
               <span className="pl-1">Get Started</span>
               <ChevronRight size={25} />
             </Link>
@@ -60,6 +58,3 @@ export default function Landing() {
     </div>
   );
 }
-Landing.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};

@@ -1,13 +1,11 @@
-import Head from "next/head";
-import Link from "next/link";
-
-import { api } from "@/utils/api";
+import { type ReactElement } from "react";
+import Landing from "../components/landing";
+import Layout from "@/components/layout";
 
 export default function Home() {
-  return (
-    <>
-      <SnipNav />
-      <main className=""></main>
-    </>
-  );
+  return <Landing />;
 }
+
+Home.getLayout = (page: ReactElement) => {
+  return <Layout>{page}</Layout>;
+};
