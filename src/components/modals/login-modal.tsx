@@ -1,21 +1,23 @@
 import React from "react";
-import { Link } from "@nextui-org/react";
 import {
+  Link,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
-  type useDisclosure,
+  useDisclosure,
   Input,
 } from "@nextui-org/react";
 import { Github } from "lucide-react";
+import SignupModal from "./signup-modal";
 
 export default function LoginModal({
   isOpen,
   onOpenChange,
 }: ReturnType<typeof useDisclosure>) {
+  const signUpModal = useDisclosure();
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -63,7 +65,12 @@ export default function LoginModal({
                   <p className="text-center text-sm">
                     Do you have an account yet?{" "}
                   </p>
-                  <Link href="#" className="text-sm" underline="hover">
+                  <Link
+                    href="#"
+                    color="primary"
+                    className="text-sm"
+                    underline="hover"
+                  >
                     Sign Up
                   </Link>
                 </div>
@@ -73,6 +80,7 @@ export default function LoginModal({
           )}
         </ModalContent>
       </Modal>
+      <SignupModal {...signUpModal} />
     </>
   );
 }
