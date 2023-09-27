@@ -101,4 +101,18 @@ export const snip = createTRPCRouter({
       }
       return data;
     }),
+  getOne: publicProcedure
+    .input(
+      z.object({
+        slug: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const data = await db.snips.findUnique({
+        where: {
+          slug: input.slug,
+        },
+      });
+      if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+    }),
 });
