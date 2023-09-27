@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
+import LogoutModal from "./modals/logout-confirmation-modal";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 
@@ -18,6 +19,7 @@ export default function SnipNav() {
   const user = useUser();
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
+  const logoutModal = useDisclosure();
 
   return (
     <>
@@ -38,13 +40,7 @@ export default function SnipNav() {
           ) : (
             <>
               <NavbarItem>
-                <Button
-                  onPress={() => {
-                    // TODO Logout confirmation modal by @Tejash429 or @Adnanarodiya
-                  }}
-                >
-                  Logout
-                </Button>
+                <Button onPress={logoutModal.onOpen}>Logout</Button>
               </NavbarItem>
               <NavbarItem>
                 <Button
@@ -61,6 +57,7 @@ export default function SnipNav() {
       </Navbar>
       <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />
       <SignupModal {...signupModal} openLoginModal={loginModal.onOpen} />
+      <LogoutModal {...logoutModal} />
     </>
   );
 }

@@ -10,12 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Visibility {
+  PUBLIC
+  PRIVATE
+  UNLISTED
+}
+
 model Snips {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @default("Untitled Snip")
-  content   String
-  slug      String   @unique @db.VarChar(72)
-  userId    String
+  id         String     @id @default(cuid())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  title      String     @default("Untitled Snip")
+  content    String
+  slug       String     @unique @db.VarChar(72)
+  language   String     @default("plaintext")
+  userId     String?
+  visibility Visibility @default(PUBLIC)
 }
