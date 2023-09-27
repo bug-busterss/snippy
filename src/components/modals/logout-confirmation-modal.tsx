@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Modal,
@@ -7,13 +7,17 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
+  type useDisclosure,
 } from "@nextui-org/react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function LogoutModal({
   isOpen,
   onOpenChange,
 }: ReturnType<typeof useDisclosure>) {
+  const supabaseClient = useSupabaseClient();
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <>
       <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -31,6 +35,7 @@ export default function LogoutModal({
                   className="font-medium transition-background hover:bg-default-300"
                   color="default"
                   variant="flat"
+                  disabled={isLoading}
                   onPress={onClose}
                 >
                   No
@@ -39,7 +44,13 @@ export default function LogoutModal({
                   className="font-medium transition-background hover:border-2   hover:border-danger hover:bg-transparent "
                   color="danger"
                   variant="solid"
-                  onPress={onClose}
+                  isLoading={isLoading}
+                  onPress={async () => {
+                    setIsLoading(true);
+                    await supabaseClient.auth.signOut();
+                    onClose();
+                    setIsLoading(false);
+                  }}
                 >
                   Yes
                 </Button>

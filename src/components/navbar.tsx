@@ -10,7 +10,7 @@ import {
 } from "@nextui-org/react";
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
-import LogoutModal from "./modals/logut-confirmation-modal";
+import LogoutModal from "./modals/logout-confirmation-modal";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 
