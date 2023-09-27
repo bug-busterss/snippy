@@ -10,10 +10,10 @@ import {
   Input,
   Link,
 } from "@nextui-org/react";
-import { Github } from "lucide-react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { GithubLoginButton } from "../buttons";
 
 interface LoginModalProps extends ReturnType<typeof useDisclosure> {
   openSignUpModal: VoidFunction;
@@ -68,11 +68,7 @@ export default function LoginModal({
                 Sign in to your account
               </ModalHeader>
               <ModalBody>
-                <div className="text-center"></div>
-                <Button color="primary" onPress={onClose}>
-                  <Github size={22} />
-                  Sign in with GitHub
-                </Button>
+                <GithubLoginButton />
                 <p className="text-center text-sm">or continue with email</p>
 
                 <div className="mb-6 flex w-full flex-wrap items-end gap-4 md:mb-0 md:flex-nowrap">
