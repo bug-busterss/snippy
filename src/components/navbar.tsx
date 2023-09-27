@@ -11,12 +11,12 @@ import {
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
 import LogoutModal from "./modals/logout-confirmation-modal";
-import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import { useUserMetadata } from "@/hooks/use-user-metadata";
 
 export default function SnipNav() {
   const router = useRouter();
-  const user = useUser();
+  const user = useUserMetadata();
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
   const logoutModal = useDisclosure();
