@@ -25,16 +25,18 @@ const CreateSnips = () => {
   const [tags, setTags] = useState<Selection>(new Set([]));
   const [code, setCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
 
-  const { mutate } = api.snip.create.useMutation();
+  const { mutate } = api.snip.create.useMutation({
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
   function handleSave() {
     const newLanguage = Array.from(language)[0] as string;
     const newVisibility = Array.from(visibility)[0] as string;
     mutate({
       title,
-      description,
       code,
       language: newLanguage,
       visibility: newVisibility,
@@ -68,13 +70,6 @@ const CreateSnips = () => {
           selected={language}
           className="w-2/4"
           options={languages}
-        />
-        <MultiSelect
-          label={"Tags"}
-          setValues={setTags}
-          selected={tags}
-          options={tagsOptions}
-          className="w-2/4"
         />
       </div>
       <Input
