@@ -7,13 +7,25 @@ export const VisilityOptions = [
     checked: false,
   },
   {
-    label: "Private",
-    value: "private",
+    label: "Unlisted",
+    value: "unlisted",
+    checked: false,
+  },
+];
+export const VisilityOptionsAuth = [
+  {
+    label: "Public",
+    value: "public",
     checked: false,
   },
   {
-    label: "Protected",
+    label: "Unlisted",
     value: "unlisted",
+    checked: false,
+  },
+  {
+    label: "Private",
+    value: "private",
     checked: false,
   },
 ];
