@@ -104,9 +104,79 @@ export const protectedSnip = createTRPCRouter({
       const data = await db.snips.findUnique({
         where: {
           slug: input.slug,
-          id: ctx.user.id,
+          userId: ctx.user.id,
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+    }),
+  getOneID: protectedProcedure
+    .input(
+      z.object({
+        slugId: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const data = await db.snips.findUnique({
+        where: {
+          id: input.slugId,
+          userId: ctx.user.id,
+        },
+      });
+      return data;
+    }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        code: z.string(),
+        language: z.string(),
+        slug: z.string(),
+        visibility: z.nativeEnum(Visibility).default("public"),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { title, code: content, language, slug, visibility } = input;
+      const slugExists = await db.snips.findFirst({
+        where: {
+          slug,
+        },
+      });
+
+      if (!content) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Content is required",
+        });
+      }
+      if (!language) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Language is required",
+        });
+      }
+      if (/\s/g.test(slug))
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Slug cannot start with whitespace",
+        });
+      if (slugExists)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Slug already exists",
+        });
+      return await db.snips.update({
+        where: {
+          id: input.id,
+          userId: ctx.user.id,
+        },
+        data: {
+          title,
+          content,
+          language,
+          visibility,
+          slug: slug.trim() === "" ? nanoid(7) : slug,
+        },
+      });
     }),
 });

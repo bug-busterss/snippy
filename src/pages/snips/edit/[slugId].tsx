@@ -16,10 +16,9 @@ import {
   removeConsecutiveHypens,
   removeConsecutiveSpaces,
 } from "@/utils/functions";
-import { githubDark } from "@uiw/codemirror-theme-github";
 import { useRouter } from "next/router";
 
-function CreateSnips() {
+function EditSnips(props) {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");
@@ -27,35 +26,23 @@ function CreateSnips() {
   const [slug, setSlug] = useState("");
   const user = useUser();
   const router = useRouter();
-  const slugId = router.query.slugId as string;
 
-  const data = api.protectedSnip.getOneID.useQuery({ slugId });
-  const snipData = data.data;
-  useEffect(() => {
-    console.log(snipData);
-
-    // if (snipData) {
-    //   setCode(snipData.content);
-    //   setTitle(snipData.title);
-    //   setSlug(snipData.data.slug);
-    //   setLanguage(new Set([snipData.data.language]));
-    //   setVisibility(new Set([snipData.data.visibility]));
-    // }
-  }, [snipData]);
-
-  const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
-    onSuccess: async (data) => {
-      console.log(data);
-      toast.success("Snip Created");
-      await router.push(`/snips/${data.slug}`);
-    },
-
-    onError: (error) => {
-      console.log(error);
-      toast.error(error.message);
-    },
+  const { slugId } = router.query;
+  const data = api.protectedSnip.getOneID.useQuery({
+    slugId: slugId as string,
   });
-  const { mutate } = api.protectedSnip.create.useMutation({
+  useEffect(() => {
+    if (!data.data) {
+      return;
+    }
+    setCode(data.data.content);
+    setTitle(data.data.title);
+    setSlug(data.data.slug);
+    setLanguage(new Set([data.data.language]));
+    setVisibility(new Set([data.data.visibility]));
+  }, [data.data]);
+
+  const { mutate } = api.protectedSnip.update.useMutation({
     onSuccess: (data) => {
       console.log(data);
       toast.success("Snip Created");
@@ -66,33 +53,27 @@ function CreateSnips() {
       toast.error(error.message);
     },
   });
-  function handleSaveAnon() {
-    const newLanguage = Array.from(language)[0] as string;
-    const newVisibility = Array.from(visibility)[0] as Visibility;
-    mutateAnon({
-      title,
-      code,
-      language: newLanguage,
-      visibility: newVisibility,
-    });
-  }
+
   function handleSave() {
     const newLanguage = Array.from(language)[0] as string;
     const newVisibility = Array.from(visibility)[0] as Visibility;
-    mutate({
-      title,
-      code,
-      language: newLanguage,
-      visibility: newVisibility,
-      slug,
-    });
+    if (data.data?.id) {
+      mutate({
+        id: data.data?.id,
+        title,
+        code,
+        language: newLanguage,
+        visibility: newVisibility,
+        slug,
+      });
+    }
   }
 
   return (
     <main className="flex h-full w-full flex-col gap-4 bg-background p-8">
       <Input
         type="text"
-        defaultValue={title}
+        value={title}
         onChange={(e) => {
           setTitle(e.target.value);
           let jod = removeConsecutiveSpaces(e.target.value).toLowerCase();
@@ -123,6 +104,7 @@ function CreateSnips() {
         <Input
           type="text"
           value={slug}
+          defaultValue={slug}
           onChange={(e) => {
             setSlug(e.target.value);
           }}
@@ -133,8 +115,7 @@ function CreateSnips() {
       <CodeMirror
         value={code}
         height="384px"
-        theme={githubDark}
-        className="text-xl"
+        theme={"dark"}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -144,13 +125,14 @@ function CreateSnips() {
         }}
       />
       <div className="flex w-full gap-2">
-        {user && <Button onClick={handleSave}>Save</Button>}
-        <Button onClick={handleSaveAnon}>
-          {user ? "Save Anonymously" : "Save"}
-        </Button>
+        {user && <Button onClick={handleSave}>Update</Button>}
       </div>
     </main>
   );
 }
 
-export default CreateSnips;
+export default EditSnips;
+
+EditSnips.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
