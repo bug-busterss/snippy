@@ -1,8 +1,10 @@
 import CardComponent from "@/components/card-comp";
 import { Button } from "@nextui-org/react";
 import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import Imagestyler from "./imagestyler";
 
 export default function Landing() {
   const [active, setActive] = useState(0);
@@ -53,6 +55,8 @@ export default function Landing() {
             isBorder={active == 2}
           />
         </div>
+
+        <Imagestyler i={active} />
       </div>
     </div>
   );
