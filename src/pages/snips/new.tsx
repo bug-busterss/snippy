@@ -16,7 +16,7 @@ import {
   removeConsecutiveHypens,
   removeConsecutiveSpaces,
 } from "@/utils/functions";
-import { githubDark } from "@uiw/codemirror-theme-github";
+import { xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { useRouter } from "next/router";
 
 const CreateSnips = () => {
@@ -121,7 +121,7 @@ const CreateSnips = () => {
       <CodeMirror
         value={code}
         height="384px"
-        theme={githubDark}
+        theme={xcodeDark}
         className="text-xl"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

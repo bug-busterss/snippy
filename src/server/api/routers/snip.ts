@@ -89,5 +89,6 @@ export const snip = createTRPCRouter({
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+      return data;
     }),
 });
