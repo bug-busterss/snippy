@@ -12,7 +12,7 @@ export default function SnipCard({ snip }: SnipCardProps) {
       className="h-100 max-w-xs p-3"
       isPressable
       as={Link}
-      href={`/snips/${snip.slug}`}
+      href={`/s/${snip.slug}`}
     >
       <CardBody className=" flex flex-col gap-3">
         <h4 className="text-2xl">
