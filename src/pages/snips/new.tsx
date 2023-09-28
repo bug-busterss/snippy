@@ -29,20 +29,21 @@ const CreateSnips = () => {
   const router = useRouter();
   // console.log(user);
 
-  const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
-    onSuccess: async (data) => {
-      toast.success("Snip Created");
-      if (slug.toLowerCase() !== "new") {
-        await router.push(`/snips/${data.slug}`);
-      }
-    },
+  const { mutate: mutateAnon, isLoading: isLoadingAnon } =
+    api.snip.createAnon.useMutation({
+      onSuccess: async (data) => {
+        toast.success("Snip Created");
+        if (slug.toLowerCase() !== "new") {
+          await router.push(`/snips/${data.slug}`);
+        }
+      },
 
-    onError: (error) => {
-      console.log(error);
-      toast.error(error.message);
-    },
-  });
-  const { mutate } = api.protectedSnip.create.useMutation({
+      onError: (error) => {
+        console.log(error);
+        toast.error(error.message);
+      },
+    });
+  const { mutate, isLoading } = api.protectedSnip.create.useMutation({
     onSuccess: (data) => {
       console.log(data);
       toast.success("Snip Created");
@@ -130,9 +131,17 @@ const CreateSnips = () => {
           setCode(e);
         }}
       />
-      <div className="flex w-full gap-2">
-        {user && <Button onClick={handleSave}>Save</Button>}
-        <Button onClick={handleSaveAnon}>
+      <div className="flex w-full justify-end gap-2">
+        {user && (
+          <Button onPress={handleSave} color="primary" isLoading={isLoading}>
+            Save
+          </Button>
+        )}
+        <Button
+          onPress={handleSaveAnon}
+          color={user ? "secondary" : "primary"}
+          isLoading={isLoadingAnon}
+        >
           {user ? "Save Anonymously" : "Save"}
         </Button>
       </div>
