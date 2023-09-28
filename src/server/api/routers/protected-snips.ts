@@ -179,4 +179,12 @@ export const protectedSnip = createTRPCRouter({
         },
       });
     }),
+  DeleteOne: protectedProcedure
+    .input(z.object({ slugId: z.string() }))
+    .mutation(
+      async ({ input, ctx }) =>
+        await db.snips.delete({
+          where: { id: input.slugId, userId: ctx.user.id },
+        }),
+    ),
 });
