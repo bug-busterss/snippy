@@ -17,31 +17,14 @@ import {
   removeConsecutiveSpaces,
 } from "@/utils/functions";
 import { githubDark } from "@uiw/codemirror-theme-github";
-import { useRouter } from "next/router";
 
-function CreateSnips() {
+function CreateSnips(props) {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");
   const [title, setTitle] = useState("Untitled Snip");
   const [slug, setSlug] = useState("");
   const user = useUser();
-  const router = useRouter();
-  const slugId = router.query.slugId as string;
-
-  const data = api.protectedSnip.getOneID.useQuery({ slugId });
-  const snipData = data.data;
-  useEffect(() => {
-    console.log(snipData);
-
-    // if (snipData) {
-    //   setCode(snipData.content);
-    //   setTitle(snipData.title);
-    //   setSlug(snipData.data.slug);
-    //   setLanguage(new Set([snipData.data.language]));
-    //   setVisibility(new Set([snipData.data.visibility]));
-    // }
-  }, [snipData]);
 
   const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
     onSuccess: async (data) => {
