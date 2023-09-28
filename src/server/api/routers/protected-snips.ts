@@ -51,7 +51,7 @@ export const protectedSnip = createTRPCRouter({
         data: {
           title,
           content,
-          slug: slug.trim() ? nanoid() : slug,
+          slug: slug.trim() === "" ? nanoid(7) : slug,
           language,
           visibility,
           userId: ctx.user.id,

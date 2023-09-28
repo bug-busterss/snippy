@@ -34,7 +34,7 @@ export const snip = createTRPCRouter({
         data: {
           title,
           content,
-          slug: nanoid(),
+          slug: nanoid(7),
           language,
           visibility,
         },

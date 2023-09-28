@@ -33,9 +33,7 @@ const CreateSnips = () => {
     api.snip.createAnon.useMutation({
       onSuccess: async (data) => {
         toast.success("Snip Created");
-        if (slug.toLowerCase() !== "new") {
-          await router.push(`/snips/${data.slug}`);
-        }
+        await router.push(`/snips/${data.slug}`);
       },
 
       onError: (error) => {
@@ -44,9 +42,12 @@ const CreateSnips = () => {
       },
     });
   const { mutate, isLoading } = api.protectedSnip.create.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       console.log(data);
       toast.success("Snip Created");
+      if (data.slug !== "new") {
+        await router.push(`/snips/${data.slug}`);
+      }
     },
 
     onError: (error) => {
@@ -83,9 +84,7 @@ const CreateSnips = () => {
         defaultValue={title}
         onChange={(e) => {
           setTitle(e.target.value);
-          let jod = removeConsecutiveSpaces(e.target.value).toLowerCase();
-          jod = removeConsecutiveHypens(e.target.value);
-          setSlug(jod.replace(/[-\s]+/g, "-"));
+          setSlug(e.target.value.replace(/\s+/g, "-").toLowerCase());
         }}
         label="Snip Title"
         radius="md"
