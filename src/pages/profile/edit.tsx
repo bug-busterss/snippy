@@ -1,19 +1,30 @@
 import Layout from "@/components/layout";
 import { Button, Input } from "@nextui-org/react";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import {
+  type User,
+  useSupabaseClient,
+  useUser,
+} from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function Edit() {
-  const supabaseClient = useSupabaseClient();
+export default function EditPage() {
   const user = useUser();
+
+  if (!user) return <p>no user found</p>;
+
+  return <Edit user={user} />;
+}
+
+function Edit({ user }: { user: User }) {
+  const supabaseClient = useSupabaseClient();
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState(user!.email);
-  const [name, setName] = useState<string>(user!.user_metadata.name as string);
+  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState<string>(user.user_metadata.name as string);
 
   return (
     <form
@@ -66,6 +77,6 @@ export default function Edit() {
   );
 }
 
-Edit.getLayout = (page: React.ReactElement) => {
+EditPage.getLayout = (page: React.ReactElement) => {
   return <Layout>{page}</Layout>;
 };
