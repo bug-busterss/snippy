@@ -24,7 +24,7 @@ export default function MultiSelect({
       <Select
         label={label}
         selectionMode="single"
-        placeholder="Select an animal"
+        placeholder="Select an option"
         selectedKeys={selected}
         className="w-full"
         onSelectionChange={setValues}
