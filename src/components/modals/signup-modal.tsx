@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "@nextui-org/react";
 import {
   Modal,
   ModalContent,
@@ -9,10 +8,12 @@ import {
   Button,
   type useDisclosure,
   Input,
+  Link,
 } from "@nextui-org/react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import toast from "react-hot-toast";
-import { GithubLoginButton } from "../buttons";
+import { GithubLoginButton, GoogleLoginButton } from "../buttons";
+import { uniqueUsernameGenerator } from "unique-username-generator";
 
 interface SignupModalProps extends ReturnType<typeof useDisclosure> {
   openLoginModal: VoidFunction;
@@ -24,6 +25,7 @@ export default function SignupModal({
   openLoginModal,
 }: SignupModalProps) {
   const supabaseClient = useSupabaseClient();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -39,9 +41,20 @@ export default function SignupModal({
       return;
     }
     setIsLoading(true);
+    const username = uniqueUsernameGenerator({
+      dictionaries: [[name]],
+      separator: "-",
+    });
+
     const { data, error } = await supabaseClient.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          name,
+          username,
+        },
+      },
     });
     setIsLoading(false);
     if (error) {
@@ -72,8 +85,22 @@ export default function SignupModal({
                 Create an account
               </ModalHeader>
               <ModalBody>
+                <GoogleLoginButton />
                 <GithubLoginButton />
                 <p className="text-center text-sm">or continue with email</p>
+
+                <div className="mb-6 flex w-full flex-wrap items-end gap-4 md:mb-0 md:flex-nowrap">
+                  <Input
+                    className="outline-none"
+                    key={"outside"}
+                    type="text"
+                    label="Name"
+                    labelPlacement={"outside"}
+                    placeholder="Your Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
 
                 <div className="mb-6 flex w-full flex-wrap items-end gap-4 md:mb-0 md:flex-nowrap">
                   <Input

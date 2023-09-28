@@ -7,16 +7,20 @@ import {
   NavbarItem,
   Button,
   useDisclosure,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@nextui-org/react";
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
 import LogoutModal from "./modals/logout-confirmation-modal";
-import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import { useUserMetadata } from "@/hooks/use-user-metadata";
 
 export default function SnipNav() {
   const router = useRouter();
-  const user = useUser();
+  const user = useUserMetadata();
   const loginModal = useDisclosure();
   const signupModal = useDisclosure();
   const logoutModal = useDisclosure();
@@ -25,7 +29,14 @@ export default function SnipNav() {
     <>
       <Navbar>
         <NavbarBrand>
-          <p className="font-bold text-inherit">Snippy</p>
+          <Button
+            className="bg-transparent font-bold text-inherit"
+            onPress={async () => {
+              await router.push("/");
+            }}
+          >
+            Snippy
+          </Button>
         </NavbarBrand>
         <NavbarContent justify="end">
           {!user ? (
@@ -40,17 +51,46 @@ export default function SnipNav() {
           ) : (
             <>
               <NavbarItem>
-                <Button onPress={logoutModal.onOpen}>Logout</Button>
+                <Dropdown backdrop="blur">
+                  <DropdownTrigger>
+                    <Button variant="ghost">My Profile</Button>
+                  </DropdownTrigger>
+                  <DropdownMenu variant="faded" aria-label="Static Actions">
+                    <DropdownItem
+                      key="copy"
+                      onPress={async () => await router.push("/profile")}
+                    >
+                      View
+                    </DropdownItem>
+                    <DropdownItem
+                      key="new"
+                      onPress={async () => await router.push("/snip/edit/id")}
+                    >
+                      Edit
+                    </DropdownItem>
+                    <DropdownItem
+                      key="delete"
+                      className="text-danger"
+                      color="danger"
+                      onPress={logoutModal.onOpen}
+                    >
+                      Logout
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </NavbarItem>
+              {/* <NavbarItem>
+                <Button >Logout</Button>
               </NavbarItem>
               <NavbarItem>
                 <Button
-                  onPress={() => {
-                    // TODO Redirect to user profile page by anyone
+                  onPress={async () => {
+                    await router.push("/profile");
                   }}
                 >
                   My Profile
                 </Button>
-              </NavbarItem>
+              </NavbarItem> */}
             </>
           )}
         </NavbarContent>
