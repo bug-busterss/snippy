@@ -191,4 +191,18 @@ export const protectedSnip = createTRPCRouter({
           where: { id: input.slugId, userId: ctx.user.id },
         }),
     ),
+  mySnips: protectedProcedure.query(async ({ ctx }) => {
+    const data = await db.snips.findMany({
+      where: {
+        userId: ctx.user.id,
+      },
+    });
+    if (!data) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "No Data",
+      });
+    }
+    return data;
+  }),
 });
