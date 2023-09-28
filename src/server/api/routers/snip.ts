@@ -75,6 +75,15 @@ export const snip = createTRPCRouter({
       }
       return data;
     }),
+  getHomepage: publicProcedure.query(async ({ ctx }) => {
+    const snips = await ctx.db.snips.findMany({
+      take: 6,
+      where: { visibility: "public" },
+      select: { title: true, createdAt: true, language: true },
+    });
+
+    return snips;
+  }),
   getOne: publicProcedure
     .input(
       z.object({
