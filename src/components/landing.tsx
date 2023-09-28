@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import Imagestyler from "./imagestyler";
 import { api } from "@/utils/api";
+import { snip } from "@/server/api/routers/snip";
+import CardComponentSnip from "./card-component";
 
 export default function Landing() {
   const [active, setActive] = useState(0);
@@ -60,6 +62,11 @@ export default function Landing() {
         </div>
 
         <Imagestyler i={active} />
+      </div>
+      <div className="flex p-8">
+        {snips?.map((snip, key) => (
+          <CardComponentSnip title={snip.title} language={snip.language} />
+        ))}
       </div>
     </div>
   );
