@@ -23,10 +23,10 @@ export default function NotFoundPage() {
         <h1 className="mb-6 text-4xl font-bold">404</h1>
 
         <p className="mb-6 text-xl">
-          {user ? `you logged in as {user.email}` : `you are not logged in`}
+          {user ? `you logged in as ${user.email}` : `you are not logged in`}
         </p>
 
-        {!user ? (
+        {user ? (
           <Button href="/profile" as={Link} color="primary" className=" w-56">
             Your snips
           </Button>
