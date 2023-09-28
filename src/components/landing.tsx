@@ -64,7 +64,9 @@ export default function Landing() {
         <Imagestyler i={active} />
       </div>
       <div className="flex p-8">
-        {snips?.map((snip, key) => <CardComponentSnip />)}
+        {snips?.map((snip, key) => (
+          <CardComponentSnip title={snip.title} language={snip.language} />
+        ))}
       </div>
     </div>
   );
