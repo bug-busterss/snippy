@@ -10,11 +10,13 @@ import {
   type useDisclosure,
 } from "@nextui-org/react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 export default function LogoutModal({
   isOpen,
   onOpenChange,
 }: ReturnType<typeof useDisclosure>) {
+  const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,6 +50,7 @@ export default function LogoutModal({
                   onPress={async () => {
                     setIsLoading(true);
                     await supabaseClient.auth.signOut();
+                    await router.push("/");
                     onClose();
                     setIsLoading(false);
                   }}
