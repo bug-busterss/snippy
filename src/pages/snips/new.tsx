@@ -19,7 +19,7 @@ import {
 import { githubDark } from "@uiw/codemirror-theme-github";
 import { useRouter } from "next/router";
 
-function CreateSnips() {
+const CreateSnips = () => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");
@@ -138,6 +138,10 @@ function CreateSnips() {
       </div>
     </main>
   );
-}
+};
+
+CreateSnips.getLayout = (page: ReactElement) => {
+  return <Layout>{page}</Layout>;
+};
 
 export default CreateSnips;
