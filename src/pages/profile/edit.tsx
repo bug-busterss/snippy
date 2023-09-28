@@ -1,6 +1,7 @@
 import Layout from "@/components/layout";
 import { Button, Input } from "@nextui-org/react";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -8,21 +9,26 @@ import toast from "react-hot-toast";
 export default function Edit() {
   const supabaseClient = useSupabaseClient();
   const user = useUser();
+  const router = useRouter();
 
-  const [email, setEmail] = useState(user?.email);
-  const [username, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState(user!.email);
+  const [name, setName] = useState<string>(user!.user_metadata.name as string);
 
   return (
     <form
-      className="flex  h-full justify-center overflow-auto bg-default-50 px-[80px] py-[120px]"
+      className="flex h-full justify-center overflow-auto bg-default-50 px-[80px] py-[120px]"
       onSubmit={async (e) => {
         e.preventDefault();
-        if (email?.trim() === "" || username?.trim() === "") return;
+        setIsLoading(true);
+        if (email?.trim() === "" || name?.trim() === "") return;
         await supabaseClient.auth.updateUser({
           email,
-          data: { metadata: { username } },
+          data: { name },
         });
+        setIsLoading(false);
         toast.success("Profile Updated");
+        await router.push("/profile");
       }}
     >
       <div className="flex w-[50%]  flex-col items-center gap-6">
@@ -34,8 +40,8 @@ export default function Edit() {
           label="Username"
           labelPlacement={"outside"}
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           className="outline-none"
@@ -50,6 +56,8 @@ export default function Edit() {
         <Button
           className="border-none bg-white text-black hover:text-slate-200"
           variant="ghost"
+          type="submit"
+          isLoading={isLoading}
         >
           Save Changes{" "}
         </Button>
