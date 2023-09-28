@@ -29,7 +29,7 @@ const CreateSnips = () => {
     api.snip.createAnon.useMutation({
       onSuccess: async (data) => {
         toast.success("Snip Created");
-        await router.push(`/snips/${data.slug}`);
+        await router.push(`/s/${data.slug}`);
       },
 
       onError: (error) => {
@@ -42,7 +42,7 @@ const CreateSnips = () => {
       console.log(data);
       toast.success("Snip Created");
       if (data.slug !== "new") {
-        await router.push(`/snips/${data.slug}`);
+        await router.push(`/s/${data.slug}`);
       }
     },
 

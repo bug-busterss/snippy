@@ -1,13 +1,15 @@
 import CardComponent from "@/components/card-comp";
 import { Button } from "@nextui-org/react";
 import { ChevronRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Imagestyler from "./imagestyler";
+import { api } from "@/utils/api";
 
 export default function Landing() {
   const [active, setActive] = useState(0);
+  const { data: snips } = api.snip.getHomepage.useQuery();
+
   return (
     <div className="bg-gradient-to-br from-primary-100 to-primary-300">
       <div className="flex  flex-col items-center justify-center gap-[60px] px-[80px] py-[120px]">

@@ -68,7 +68,7 @@ function EditSnips() {
         slug,
       });
     }
-    void router.push(`/snips/${slug}`);
+    void router.push(`/s/${slug}`);
   }
 
   return (
