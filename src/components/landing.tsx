@@ -4,13 +4,13 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Imagestyler from "./imagestyler";
-import { api } from "@/utils/api";
-import { snip } from "@/server/api/routers/snip";
-import CardComponentSnip from "./card-component";
+// import { api } from "@/utils/api";
+// import { snip } from "@/server/api/routers/snip";
+// import CardComponentSnip from "./card-component";
 
 export default function Landing() {
   const [active, setActive] = useState(0);
-  const { data: snips } = api.snip.getHomepage.useQuery();
+  // const { data: snips } = api.snip.getHomepage.useQuery();
 
   return (
     <div className="bg-gradient-to-br from-primary-100 to-primary-300">
@@ -63,11 +63,11 @@ export default function Landing() {
 
         <Imagestyler i={active} />
       </div>
-      <div className="flex p-8">
+      {/* <div className="flex p-8">
         {snips?.map((snip, key) => (
           <CardComponentSnip title={snip.title} language={snip.language} />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
