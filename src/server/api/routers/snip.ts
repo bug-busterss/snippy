@@ -81,14 +81,24 @@ export const snip = createTRPCRouter({
         slug: z.string(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const data = await db.snips.findUnique({
         where: {
           slug: input.slug,
-          visibility: "public",
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+
+      if (!ctx.user && data.visibility === "private")
+        throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+
+      if (
+        ctx.user &&
+        data.visibility === "private" &&
+        ctx.user.id !== data.userId
+      )
+        throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+
       return data;
     }),
 });
