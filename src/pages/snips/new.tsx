@@ -12,36 +12,38 @@ import toast from "react-hot-toast";
 import { type Visibility } from "@prisma/client";
 import { useUser } from "@supabase/auth-helpers-react";
 import VisibilitySelect from "@/components/multiselect/visibiltySelect";
-import {
-  removeConsecutiveHypens,
-  removeConsecutiveSpaces,
-} from "@/utils/functions";
-import { githubDark } from "@uiw/codemirror-theme-github";
+import { xcodeDark } from "@uiw/codemirror-theme-xcode";
+import { useRouter } from "next/router";
 
-function CreateSnips(props) {
+const CreateSnips = () => {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");
   const [title, setTitle] = useState("Untitled Snip");
   const [slug, setSlug] = useState("");
   const user = useUser();
+  const router = useRouter();
+  // console.log(user);
 
-  const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
+  const { mutate: mutateAnon, isLoading: isLoadingAnon } =
+    api.snip.createAnon.useMutation({
+      onSuccess: async (data) => {
+        toast.success("Snip Created");
+        await router.push(`/snips/${data.slug}`);
+      },
+
+      onError: (error) => {
+        console.log(error);
+        toast.error(error.message);
+      },
+    });
+  const { mutate, isLoading } = api.protectedSnip.create.useMutation({
     onSuccess: async (data) => {
       console.log(data);
       toast.success("Snip Created");
-      await router.push(`/snips/${data.slug}`);
-    },
-
-    onError: (error) => {
-      console.log(error);
-      toast.error(error.message);
-    },
-  });
-  const { mutate } = api.protectedSnip.create.useMutation({
-    onSuccess: (data) => {
-      console.log(data);
-      toast.success("Snip Created");
+      if (data.slug !== "new") {
+        await router.push(`/snips/${data.slug}`);
+      }
     },
 
     onError: (error) => {
@@ -78,9 +80,7 @@ function CreateSnips(props) {
         defaultValue={title}
         onChange={(e) => {
           setTitle(e.target.value);
-          let jod = removeConsecutiveSpaces(e.target.value).toLowerCase();
-          jod = removeConsecutiveHypens(e.target.value);
-          setSlug(jod.replace(/[-\s]+/g, "-"));
+          setSlug(e.target.value.replace(/\s+/g, "-").toLowerCase());
         }}
         label="Snip Title"
         radius="md"
@@ -116,7 +116,7 @@ function CreateSnips(props) {
       <CodeMirror
         value={code}
         height="384px"
-        theme={githubDark}
+        theme={xcodeDark}
         className="text-xl"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -126,14 +126,26 @@ function CreateSnips(props) {
           setCode(e);
         }}
       />
-      <div className="flex w-full gap-2">
-        {user && <Button onClick={handleSave}>Save</Button>}
-        <Button onClick={handleSaveAnon}>
+      <div className="flex w-full justify-end gap-2">
+        {user && (
+          <Button onPress={handleSave} color="primary" isLoading={isLoading}>
+            Save
+          </Button>
+        )}
+        <Button
+          onPress={handleSaveAnon}
+          color={user ? "secondary" : "primary"}
+          isLoading={isLoadingAnon}
+        >
           {user ? "Save Anonymously" : "Save"}
         </Button>
       </div>
     </main>
   );
-}
+};
+
+CreateSnips.getLayout = (page: ReactElement) => {
+  return <Layout>{page}</Layout>;
+};
 
 export default CreateSnips;

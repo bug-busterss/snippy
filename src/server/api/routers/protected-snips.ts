@@ -19,9 +19,13 @@ export const protectedSnip = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       const { title, code: content, language, slug, visibility } = input;
+      let finalSlug = slug;
+      if (slug.trim() === "") {
+        finalSlug = nanoid(7);
+      }
       const slugExists = await db.snips.findFirst({
         where: {
-          slug,
+          slug: finalSlug,
         },
       });
 
@@ -37,7 +41,7 @@ export const protectedSnip = createTRPCRouter({
           message: "Language is required",
         });
       }
-      if (/\s/g.test(slug))
+      if (/\s/g.test(finalSlug))
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Slug cannot start with whitespace",
@@ -51,7 +55,7 @@ export const protectedSnip = createTRPCRouter({
         data: {
           title,
           content,
-          slug: slug.trim() === "" ? nanoid(7) : slug,
+          slug: finalSlug,
           language,
           visibility,
           userId: ctx.user.id,
