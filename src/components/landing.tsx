@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function Landing() {
   const [active, setActive] = useState(0);
   return (
-    <div className="h-screen bg-gradient-to-br from-primary-100 to-primary-300">
+    <div className="bg-gradient-to-br from-primary-100 to-primary-300">
       <div className="flex  flex-col items-center justify-center gap-[60px] px-[80px] py-[120px]">
         <div className="flex flex-col items-center gap-4 ">
           <h1 className="text-6xl font-extrabold leading-10 ">SNIPPY</h1>
