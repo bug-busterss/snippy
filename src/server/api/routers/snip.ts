@@ -90,14 +90,26 @@ export const snip = createTRPCRouter({
         slug: z.string(),
       }),
     )
-    .query(async ({ input }) => {
-      const data = await db.snips.findUnique({
+    .query(async ({ ctx, input }) => {
+      const data = await ctx.db.snips.findUnique({
         where: {
           slug: input.slug,
-          visibility: "public",
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+      if (!ctx.user && data.visibility === "private") {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not authorized to view this snip",
+        });
+      }
+      if (ctx.user && data.userId !== ctx.user.id) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not authorized to view this snip",
+        });
+      }
+
       return data;
     }),
 });
