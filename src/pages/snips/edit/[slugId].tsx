@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/router";
 import { githubDark } from "@uiw/codemirror-theme-github";
 
-function EditSnips(props) {
+function EditSnips() {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");

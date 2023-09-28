@@ -1,23 +1,26 @@
-import React from "react";
-
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Button,
 } from "@nextui-org/react";
-import { MoreVertical } from "lucide-react";
+import {
+  MoreHorizontal,
+  FilePlus,
+  FileEdit,
+  Share,
+  Trash2,
+} from "lucide-react";
 import { api } from "@/utils/api";
 import toast from "react-hot-toast";
-import { useCopyToClipboard } from "usehooks-ts";
 import { useRouter } from "next/router";
 
 interface DropdownProps {
   slugId: string;
 }
 
-export default function SnipActions({ slugId }) {
-  const [value, copy] = useCopyToClipboard();
+export default function SnipActions({ slugId }: DropdownProps) {
   const ctx = api.useContext();
 
   const { mutate } = api.protectedSnip.DeleteOne.useMutation({
@@ -40,26 +43,30 @@ export default function SnipActions({ slugId }) {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <MoreVertical />
+        <Button variant="shadow" color="default">
+          <MoreHorizontal />
+        </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem
-          onClick={() => {
-            void router.push("/snips/new");
-          }}
+          startContent={<FilePlus />}
+          onClick={() => void router.push("/snips/new")}
           key="new"
         >
           New Snip
         </DropdownItem>
         <DropdownItem
-          onClick={() => {
-            void router.push(`/snips/edit/${slugId}`);
-          }}
+          startContent={<FileEdit />}
+          onClick={() => void router.push(`/snips/edit/${slugId}`)}
           key="edit"
         >
-          Edit file
+          Edit Snip
         </DropdownItem>
-        <DropdownItem onClick={() => copy(window.location.href)} key="copy">
+        <DropdownItem
+          startContent={<Share />}
+          onClick={() => navigator.share({ url: window.location.href })}
+          key="copy"
+        >
           Share Snip
         </DropdownItem>
         <DropdownItem
@@ -67,8 +74,9 @@ export default function SnipActions({ slugId }) {
           className="text-danger"
           color="danger"
           onClick={handleDelete}
+          startContent={<Trash2 />}
         >
-          Delete file
+          Delete Snip
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

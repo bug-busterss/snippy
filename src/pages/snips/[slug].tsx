@@ -9,14 +9,14 @@ import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { Chip } from "@nextui-org/react";
 import {
   type GetServerSidePropsContext,
-  InferGetServerSidePropsType,
+  type InferGetServerSidePropsType,
 } from "next";
 import { db } from "@/server/db";
 import { Dot } from "lucide-react";
-import SnipActions from "./drop-down/snip-actions";
+import SnipActions from "../../components/drop-downs/snip-actions";
 
 export default function SnipDisplay(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) {
   const router = useRouter();
   const { data: snip } = api.snip.getOne.useQuery({
@@ -37,7 +37,6 @@ export default function SnipDisplay(
                 Updated: {dayjs(snip.updatedAt).format("D MMM YYYY")}
               </h3>
             )}
-            <SnipActions slugId={snip.id} />
             <div className="flex items-center">
               <Chip color="warning" variant="flat">
                 {snip.language}
@@ -46,17 +45,22 @@ export default function SnipDisplay(
               <Chip color="secondary">{snip.views} views</Chip>
             </div>
           </div>
-          <CodeMirror
-            value={snip.content}
-            height="384px"
-            theme={xcodeDark}
-            className="mt-5 text-xl"
-            editable={false}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            extensions={[loadLanguage(snip.language)]}
-          />
+          <div className="relative">
+            <div className="absolute right-5 top-2">
+              <SnipActions slugId={snip.id} />
+            </div>
+            <CodeMirror
+              value={snip.content}
+              height="384px"
+              theme={xcodeDark}
+              className="mt-5 text-xl"
+              editable={false}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+              extensions={[loadLanguage(snip.language)]}
+            />
+          </div>
         </div>
       )}
     </div>
