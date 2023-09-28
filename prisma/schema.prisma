@@ -26,5 +26,16 @@ model Snips {
   slug       String     @unique @db.VarChar(72)
   language   String     @default("plaintext")
   userId     String?
+  comments   Comments[]
   visibility Visibility @default(public)
+}
+
+model Comments {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String
+  snipId    String
+  snip      Snips    @relation(fields: [snipId], references: [id], onDelete: Cascade)
+  userId    String
 }
