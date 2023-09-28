@@ -24,11 +24,13 @@ export default function Landing() {
           can also view and comment on other people&apos;s code snippets
         </div>
         <div>
-          <Button className="inline-flex  h-14 items-center justify-center rounded-full bg-gradient-to-br from-secondary-200 to-secondary-400 px-3 py-6 text-lg font-medium shadow-lg">
-            <Link href="/snips" className="flex justify-around text-center">
-              <span className="pl-1">Get Started</span>
-              <ChevronRight size={25} />
-            </Link>
+          <Button
+            as={Link}
+            href="/snips/new"
+            className="flex h-14 items-center justify-center rounded-full bg-gradient-to-br from-secondary-200 to-secondary-400 px-3 py-6 text-lg font-medium shadow-lg"
+          >
+            <span className="pl-1">Get Started</span>
+            <ChevronRight size={25} />
           </Button>
         </div>
         <div className="grid grid-flow-col gap-4 ">
