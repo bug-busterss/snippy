@@ -25,7 +25,14 @@ export default function SnipNav() {
     <>
       <Navbar>
         <NavbarBrand>
-          <p className="font-bold text-inherit">Snippy</p>
+          <Button
+            className="bg-transparent font-bold text-inherit"
+            onPress={async () => {
+              await router.push("/");
+            }}
+          >
+            Snippy
+          </Button>
         </NavbarBrand>
         <NavbarContent justify="end">
           {!user ? (
@@ -44,8 +51,8 @@ export default function SnipNav() {
               </NavbarItem>
               <NavbarItem>
                 <Button
-                  onPress={() => {
-                    // TODO Redirect to user profile page by anyone
+                  onPress={async () => {
+                    await router.push("/profile");
                   }}
                 >
                   My Profile

@@ -54,17 +54,17 @@ export default function UserProfile() {
           alt="User Img"
           className=" rounded-full"
         />
-        <h3 className="text-2xl"> {user && user.user_metadata.name}</h3>
+        <div className="gap-2 text-center">
+          <h3 className="text-2xl"> {user && user.user_metadata.name}</h3>
 
-        <p className=" text-gray-400">@{user && user.id}</p>
+          <p className=" mt-2 text-gray-400">@{user && user.id}</p>
+        </div>
 
-        <p className="border border-gray-400"></p>
-      </div>
-
-      <div className="flex  flex-wrap justify-center  gap-6">
-        {snips.map((snip, key) => (
-          <SnipCard snip={snip} key={key} />
-        ))}
+        <div className="mx-auto flex flex-wrap justify-center gap-6">
+          {snips.map((snip, key) => (
+            <SnipCard snip={snip} key={key} />
+          ))}
+        </div>
       </div>
     </div>
   );
