@@ -17,6 +17,7 @@ import {
   removeConsecutiveSpaces,
 } from "@/utils/functions";
 import { githubDark } from "@uiw/codemirror-theme-github";
+import { useRouter } from "next/router";
 
 function CreateSnips() {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -25,12 +26,15 @@ function CreateSnips() {
   const [title, setTitle] = useState("Untitled Snip");
   const [slug, setSlug] = useState("");
   const user = useUser();
+  const router = useRouter();
   // console.log(user);
 
   const { mutate: mutateAnon } = api.snip.createAnon.useMutation({
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: async (data) => {
       toast.success("Snip Created");
+      if (slug.toLowerCase() !== "new") {
+        await router.push(`/snips/${data.slug}`);
+      }
     },
 
     onError: (error) => {
@@ -137,7 +141,3 @@ function CreateSnips() {
 }
 
 export default CreateSnips;
-
-CreateSnips.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
