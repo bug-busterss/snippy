@@ -10,7 +10,7 @@ export default function UserProfile() {
   const user = useUser();
 
   return (
-    <div className="h-full bg-black">
+    <div className="h-full bg-default-50">
       <div className="flex flex-col items-center justify-center gap-6 pt-6">
         <Image
           width={100}
