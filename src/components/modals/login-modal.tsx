@@ -46,7 +46,7 @@ export default function LoginModal({
       throw error;
     } else {
       toast.success(`Succesfully logged in as ${data.user.email}`);
-      await router.push("/snips");
+      await router.push("/snips/new");
     }
   }
 

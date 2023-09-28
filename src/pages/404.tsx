@@ -25,7 +25,7 @@ export default function NotFoundPage() {
         </p>
 
         {!user ? (
-          <Button href="/snips" as={Link} color="primary" className=" w-56">
+          <Button href="/profile" as={Link} color="primary" className=" w-56">
             Your snips
           </Button>
         ) : (
