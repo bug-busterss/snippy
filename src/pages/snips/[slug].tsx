@@ -7,11 +7,17 @@ import { xcodeDark } from "@uiw/codemirror-theme-xcode";
 import CodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { Chip } from "@nextui-org/react";
-import { type GetServerSidePropsContext } from "next";
+import {
+  type GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
 import { db } from "@/server/db";
 import { Dot } from "lucide-react";
+import SnipActions from "./drop-down/snip-actions";
 
-export default function SnipDisplay() {
+export default function SnipDisplay(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   const router = useRouter();
   const { data: snip } = api.snip.getOne.useQuery({
     slug: router.query.slug as string,
@@ -31,6 +37,7 @@ export default function SnipDisplay() {
                 Updated: {dayjs(snip.updatedAt).format("D MMM YYYY")}
               </h3>
             )}
+            <SnipActions slugId={snip.id} />
             <div className="flex items-center">
               <Chip color="warning" variant="flat">
                 {snip.language}

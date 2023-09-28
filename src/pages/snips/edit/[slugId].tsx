@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/router";
 import { githubDark } from "@uiw/codemirror-theme-github";
 
-function EditSnips() {
+function EditSnips(props) {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");
@@ -46,7 +46,7 @@ function EditSnips() {
   const { mutate } = api.protectedSnip.update.useMutation({
     onSuccess: (data) => {
       console.log(data);
-      toast.success("Snip Created");
+      toast.success("Snip Updated");
     },
 
     onError: (error) => {
@@ -68,6 +68,7 @@ function EditSnips() {
         slug,
       });
     }
+    void router.push(`/snips/${slug}`);
   }
 
   return (
