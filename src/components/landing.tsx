@@ -17,12 +17,12 @@ export default function Landing() {
       <div className="flex  flex-col items-center justify-center gap-[60px] px-[80px] py-[120px]">
         <div className="flex flex-col items-center gap-4 ">
           <h1 className="text-6xl font-extrabold leading-10 ">SNIPPY</h1>
-          <p className="text-xl text-slate-200">
+          <p className="mt-2 text-4xl text-slate-200">
             Share your code with the world in seconds
           </p>
         </div>
 
-        <div className="max-w-4xl text-center text-xl font-normal ">
+        <div className="-mt-5 max-w-4xl text-center text-xl font-normal ">
           Snippy is a simple and fast web app that lets you create, edit, and
           share code snippets with anyone. Just copy and paste your code, choose
           a language and a name, and click on Create. You&apos;ll get a unique
