@@ -8,6 +8,8 @@ import LoginModal from "../components/modals/login-modal";
 export default function NotFoundPage() {
   const user = useUser();
   const loginModal = useDisclosure();
+  const signupModal = useDisclosure();
+
   return (
     <>
       <main className="flex h-screen w-full flex-col items-center justify-center bg-black">
@@ -37,7 +39,7 @@ export default function NotFoundPage() {
           Go to dashboard
         </Button>
 
-        <LoginModal {...loginModal} />
+        <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />
       </main>
     </>
   );
