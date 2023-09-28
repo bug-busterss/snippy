@@ -64,7 +64,7 @@ export default function SnipNav() {
                     </DropdownItem>
                     <DropdownItem
                       key="new"
-                      onPress={async () => await router.push("/snip/edit/id")}
+                      onPress={async () => await router.push("/profile/edit")}
                     >
                       Edit
                     </DropdownItem>
