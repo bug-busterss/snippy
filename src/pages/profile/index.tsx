@@ -1,10 +1,52 @@
+import Layout from "@/components/layout";
+import SnipCard from "@/components/snip-card";
 import { Image } from "@nextui-org/react";
 import { useUser } from "@supabase/auth-helpers-react";
+import { type ReactElement } from "react";
+
+const snips = [
+  {
+    title: "Snip 1",
+    language: "javascript",
+    visibility: "public",
+  },
+  {
+    title: "This is a very long snip title",
+    language: "java",
+    visibility: "private",
+  },
+  {
+    title: "This is a title",
+    language: "C",
+    visibility: "unlisted",
+  },
+  {
+    title: "Snippet",
+    language: "C++",
+    visibility: "private",
+  },
+  {
+    title: "Snippet",
+    language: "C++",
+    visibility: "private",
+  },
+  {
+    title: "Snippet",
+    language: "C++",
+    visibility: "private",
+  },
+  {
+    title: "Snippet",
+    language: "C++",
+    visibility: "private",
+  },
+];
+
 export default function UserProfile() {
   const user = useUser();
   return (
-    <>
-      <div className="flex flex-col items-center justify-center pt-6">
+    <div className="h-full bg-black">
+      <div className="flex flex-col items-center justify-center gap-4 ">
         <Image
           width={100}
           height={100}
@@ -19,10 +61,15 @@ export default function UserProfile() {
         <p className=" border border-gray-400"></p>
       </div>
 
-      <div className="flex items-center justify-center gap-6  ">
-        <p className="active:underline">Created</p>
-        <p className="active:underline">Saved</p>
+      <div className="flex flex-wrap justify-center gap-6  ">
+        {snips.map((snip, key) => (
+          <SnipCard snip={snip} key={key} />
+        ))}
       </div>
-    </>
+    </div>
   );
 }
+
+UserProfile.getLayout = (page: ReactElement) => {
+  return <Layout>{page}</Layout>;
+};

@@ -4,7 +4,7 @@ import React, { type ReactElement } from "react";
 export default function landing() {
   return (
     <main className="h-full bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-      <div className="flex  flex-col items-center justify-center gap-[60px] px-[80px] py-[120px]">
+      <div className="flex flex-col items-center justify-center gap-[60px] px-[80px] py-[120px]">
         <div className="flex flex-col items-center gap-4 ">
           <h1 className="text-6xl font-extrabold leading-10 ">SNIPPY</h1>
           <p className="text-xl text-slate-200">

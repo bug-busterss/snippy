@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import { nextui } from "@nextui-org/react";
+import { Component } from "lucide-react";
 
 module.exports = {
   darkMode: ["dark"],
