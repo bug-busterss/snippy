@@ -41,9 +41,9 @@ export default function SnipActions({ slugId }: DropdownProps) {
     void router.push("/profile");
   }
   return (
-    <Dropdown>
+    <Dropdown backdrop="blur">
       <DropdownTrigger>
-        <Button variant="shadow" color="default">
+        <Button className="bg-transparent" color="default">
           <MoreHorizontal />
         </Button>
       </DropdownTrigger>

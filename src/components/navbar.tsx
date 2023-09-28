@@ -79,18 +79,6 @@ export default function SnipNav() {
                   </DropdownMenu>
                 </Dropdown>
               </NavbarItem>
-              {/* <NavbarItem>
-                <Button >Logout</Button>
-              </NavbarItem>
-              <NavbarItem>
-                <Button
-                  onPress={async () => {
-                    await router.push("/profile");
-                  }}
-                >
-                  My Profile
-                </Button>
-              </NavbarItem> */}
             </>
           )}
         </NavbarContent>

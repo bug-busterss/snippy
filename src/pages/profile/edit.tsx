@@ -14,7 +14,7 @@ export default function Edit() {
 
   return (
     <form
-      className="flex  h-full justify-center overflow-auto bg-gradient-to-b from-[#2e026d] to-[#15162c] px-[80px] py-[120px]"
+      className="flex  h-full justify-center overflow-auto bg-default-50 px-[80px] py-[120px]"
       onSubmit={async (e) => {
         e.preventDefault();
         if (email?.trim() === "" || username?.trim() === "") return;

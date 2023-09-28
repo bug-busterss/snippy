@@ -68,11 +68,11 @@ function EditSnips() {
         slug,
       });
     }
-    void router.push(`/snips/${slug}`);
+    void router.push(`/s/${slug}`);
   }
 
   return (
-    <main className="flex h-full w-full flex-col gap-4 bg-background p-8">
+    <main className="flex h-full w-full flex-col gap-4 bg-default-50 p-8">
       <Input
         type="text"
         value={title}

@@ -24,9 +24,9 @@ export default function SnipDisplay(
   });
 
   return (
-    <div>
+    <div className="h-screen bg-default-50">
       {snip && (
-        <div className="container mx-auto">
+        <div className="container mx-auto ">
           <div className="flex flex-col items-center justify-center gap-3">
             <h1 className="text-3xl font-medium">{snip.title}</h1>
             <h3 className="text-xl">
@@ -46,7 +46,7 @@ export default function SnipDisplay(
             </div>
           </div>
           <div className="relative">
-            <div className="absolute right-5 top-2">
+            <div className="absolute right-0 top-2">
               <SnipActions slugId={snip.id} />
             </div>
             <CodeMirror
