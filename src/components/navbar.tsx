@@ -7,6 +7,10 @@ import {
   NavbarItem,
   Button,
   useDisclosure,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@nextui-org/react";
 import LoginModal from "./modals/login-modal";
 import SignupModal from "./modals/signup-modal";
@@ -47,7 +51,36 @@ export default function SnipNav() {
           ) : (
             <>
               <NavbarItem>
-                <Button onPress={logoutModal.onOpen}>Logout</Button>
+                <Dropdown backdrop="blur">
+                  <DropdownTrigger>
+                    <Button variant="ghost">My Profile</Button>
+                  </DropdownTrigger>
+                  <DropdownMenu variant="faded" aria-label="Static Actions">
+                    <DropdownItem
+                      key="copy"
+                      onPress={async () => await router.push("/profile")}
+                    >
+                      View
+                    </DropdownItem>
+                    <DropdownItem
+                      key="new"
+                      onPress={async () => await router.push("/snip/edit/id")}
+                    >
+                      Edit
+                    </DropdownItem>
+                    <DropdownItem
+                      key="delete"
+                      className="text-danger"
+                      color="danger"
+                      onPress={logoutModal.onOpen}
+                    >
+                      Logout
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </NavbarItem>
+              {/* <NavbarItem>
+                <Button >Logout</Button>
               </NavbarItem>
               <NavbarItem>
                 <Button
@@ -57,7 +90,7 @@ export default function SnipNav() {
                 >
                   My Profile
                 </Button>
-              </NavbarItem>
+              </NavbarItem> */}
             </>
           )}
         </NavbarContent>
