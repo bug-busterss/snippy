@@ -18,7 +18,8 @@ export default function Landing() {
         <div className="flex flex-col items-center gap-4 ">
           <h1 className="text-6xl font-extrabold leading-10 ">SNIPPY</h1>
           <p className="mt-2 text-4xl text-slate-200">
-            Share your code with the world in seconds
+            Share your <span className="font-bold">code</span> with the world in{" "}
+            <span className="font-bold">seconds</span>
           </p>
         </div>
 
