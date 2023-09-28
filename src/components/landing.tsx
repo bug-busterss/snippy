@@ -29,7 +29,8 @@ export default function Landing() {
           <Button
             as={Link}
             href="/snips/new"
-            className="flex h-14 items-center justify-center rounded-full bg-gradient-to-br from-secondary-200 to-secondary-400 px-3 py-6 text-lg font-medium shadow-lg"
+            className="flex h-14 items-center justify-center rounded-full  px-3 py-6 text-lg font-medium shadow-lg"
+            color="primary"
           >
             <span className="pl-1">Get Started</span>
             <ChevronRight size={25} />
