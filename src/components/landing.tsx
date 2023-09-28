@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function Landing() {
   const [active, setActive] = useState(0);
   return (
-    <div className="h-full overflow-auto bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+    <div className="h-screen bg-gradient-to-br from-primary-100 to-primary-300">
       <div className="flex  flex-col items-center justify-center gap-[60px] px-[80px] py-[120px]">
         <div className="flex flex-col items-center gap-4 ">
           <h1 className="text-6xl font-extrabold leading-10 ">SNIPPY</h1>
@@ -24,14 +24,11 @@ export default function Landing() {
           can also view and comment on other people&apos;s code snippets
         </div>
         <div>
-          <Button
-            as={Link}
-            color="primary"
-            className="flex h-14 items-center justify-center gap-1 rounded-full px-3 py-6 text-lg font-medium"
-            href="/snips/new"
-          >
-            <span>Get Started</span>
-            <ChevronRight size={25} />
+          <Button className="inline-flex  h-14 items-center justify-center rounded-full bg-gradient-to-br from-secondary-200 to-secondary-400 px-3 py-6 text-lg font-medium shadow-lg">
+            <Link href="/snips" className="flex justify-around text-center">
+              <span className="pl-1">Get Started</span>
+              <ChevronRight size={25} />
+            </Link>
           </Button>
         </div>
         <div className="grid grid-flow-col gap-4 ">
