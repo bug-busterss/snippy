@@ -17,6 +17,7 @@ import {
   removeConsecutiveSpaces,
 } from "@/utils/functions";
 import { useRouter } from "next/router";
+import { githubDark } from "@uiw/codemirror-theme-github";
 
 function EditSnips(props) {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
@@ -115,7 +116,8 @@ function EditSnips(props) {
       <CodeMirror
         value={code}
         height="384px"
-        theme={"dark"}
+        theme={githubDark}
+        className="text-xl"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
