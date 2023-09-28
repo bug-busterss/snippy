@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Imagestyler from "./imagestyler";
+import CardComponentSnip from "./card-component";
 
 export default function Landing() {
   const [active, setActive] = useState(0);
@@ -58,6 +59,11 @@ export default function Landing() {
         </div>
 
         <Imagestyler i={active} />
+      </div>
+      <div className="flex p-8">
+        <CardComponentSnip />
+        <CardComponentSnip />
+        <CardComponentSnip />
       </div>
     </div>
   );
