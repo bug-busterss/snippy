@@ -7,20 +7,26 @@ import { xcodeDark } from "@uiw/codemirror-theme-xcode";
 import CodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { Chip } from "@nextui-org/react";
-import { type GetServerSidePropsContext } from "next";
+import {
+  type GetServerSidePropsContext,
+  type InferGetServerSidePropsType,
+} from "next";
 import { db } from "@/server/db";
 import { Dot } from "lucide-react";
+import SnipActions from "../../components/drop-downs/snip-actions";
 
-export default function SnipDisplay() {
+export default function SnipDisplay(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+) {
   const router = useRouter();
   const { data: snip } = api.snip.getOne.useQuery({
     slug: router.query.slug as string,
   });
 
   return (
-    <div>
+    <div className="h-screen bg-default-50">
       {snip && (
-        <div className="container mx-auto">
+        <div className="container mx-auto ">
           <div className="flex flex-col items-center justify-center gap-3">
             <h1 className="text-3xl font-medium">{snip.title}</h1>
             <h3 className="text-xl">
@@ -39,17 +45,22 @@ export default function SnipDisplay() {
               <Chip color="secondary">{snip.views} views</Chip>
             </div>
           </div>
-          <CodeMirror
-            value={snip.content}
-            height="384px"
-            theme={xcodeDark}
-            className="mt-5 text-xl"
-            editable={false}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            extensions={[loadLanguage(snip.language)]}
-          />
+          <div className="relative">
+            <div className="absolute right-0 top-2">
+              <SnipActions slugId={snip.id} />
+            </div>
+            <CodeMirror
+              value={snip.content}
+              height="384px"
+              theme={xcodeDark}
+              className="mt-5 text-xl"
+              editable={false}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+              extensions={[loadLanguage(snip.language)]}
+            />
+          </div>
         </div>
       )}
     </div>

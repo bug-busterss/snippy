@@ -75,20 +75,41 @@ export const snip = createTRPCRouter({
       }
       return data;
     }),
+  getHomepage: publicProcedure.query(async ({ ctx }) => {
+    const snips = await ctx.db.snips.findMany({
+      take: 6,
+      where: { visibility: "public" },
+      select: { title: true, createdAt: true, language: true },
+    });
+
+    return snips;
+  }),
   getOne: publicProcedure
     .input(
       z.object({
         slug: z.string(),
       }),
     )
-    .query(async ({ input }) => {
-      const data = await db.snips.findUnique({
+    .query(async ({ ctx, input }) => {
+      const data = await ctx.db.snips.findUnique({
         where: {
           slug: input.slug,
-          visibility: "public",
         },
       });
       if (!data) throw new TRPCError({ code: "NOT_FOUND", message: "No Data" });
+      if (!ctx.user && data.visibility === "private") {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not authorized to view this snip",
+        });
+      }
+      if (ctx.user && data.userId !== ctx.user.id) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not authorized to view this snip",
+        });
+      }
+
       return data;
     }),
 });

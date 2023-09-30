@@ -11,8 +11,8 @@ interface cardComponentProps {
 export default function CardComponent(props: cardComponentProps) {
   return (
     <Card
-      className={`max-w-md bg-gradient-to-b from-[#331b55] to-[#15162c]  p-2 ${
-        props.isBorder ? " border-2 border-sky-600" : "border-none"
+      className={`max-w-md bg-gradient-to-tr from-primary-200 to-primary-400  p-2 ${
+        props.isBorder ? " border-2 border-white" : "border-none"
       } `}
       isPressable
       onPress={props.clickHandler}

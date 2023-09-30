@@ -29,7 +29,7 @@ const CreateSnips = () => {
     api.snip.createAnon.useMutation({
       onSuccess: async (data) => {
         toast.success("Snip Created");
-        await router.push(`/snips/${data.slug}`);
+        await router.push(`/s/${data.slug}`);
       },
 
       onError: (error) => {
@@ -42,7 +42,7 @@ const CreateSnips = () => {
       console.log(data);
       toast.success("Snip Created");
       if (data.slug !== "new") {
-        await router.push(`/snips/${data.slug}`);
+        await router.push(`/s/${data.slug}`);
       }
     },
 
@@ -74,7 +74,7 @@ const CreateSnips = () => {
   }
 
   return (
-    <main className="flex h-full w-full flex-col gap-4 bg-background p-8">
+    <main className="flex h-full w-full flex-col gap-4 bg-default-50 p-8">
       <Input
         type="text"
         defaultValue={title}
@@ -117,7 +117,7 @@ const CreateSnips = () => {
         value={code}
         height="384px"
         theme={xcodeDark}
-        className="text-xl"
+        className="text-xl "
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -128,7 +128,12 @@ const CreateSnips = () => {
       />
       <div className="flex w-full justify-end gap-2">
         {user && (
-          <Button onPress={handleSave} color="primary" isLoading={isLoading}>
+          <Button
+            onPress={handleSave}
+            color="primary"
+            isLoading={isLoading}
+            className="font-medium"
+          >
             Save
           </Button>
         )}
@@ -136,6 +141,7 @@ const CreateSnips = () => {
           onPress={handleSaveAnon}
           color={user ? "secondary" : "primary"}
           isLoading={isLoadingAnon}
+          className="font-medium"
         >
           {user ? "Save Anonymously" : "Save"}
         </Button>

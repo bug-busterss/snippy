@@ -17,6 +17,8 @@ import SignupModal from "./modals/signup-modal";
 import LogoutModal from "./modals/logout-confirmation-modal";
 import { useRouter } from "next/router";
 import { useUserMetadata } from "@/hooks/use-user-metadata";
+import { GithubIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function SnipNav() {
   const router = useRouter();
@@ -30,10 +32,9 @@ export default function SnipNav() {
       <Navbar>
         <NavbarBrand>
           <Button
-            className="bg-transparent font-bold text-inherit"
-            onPress={async () => {
-              await router.push("/");
-            }}
+            as={Link}
+            href="/"
+            className="bg-transparent text-2xl font-bold text-inherit"
           >
             Snippy
           </Button>
@@ -64,7 +65,7 @@ export default function SnipNav() {
                     </DropdownItem>
                     <DropdownItem
                       key="new"
-                      onPress={async () => await router.push("/snip/edit/id")}
+                      onPress={async () => await router.push("/profile/edit")}
                     >
                       Edit
                     </DropdownItem>
@@ -79,20 +80,17 @@ export default function SnipNav() {
                   </DropdownMenu>
                 </Dropdown>
               </NavbarItem>
-              {/* <NavbarItem>
-                <Button >Logout</Button>
-              </NavbarItem>
-              <NavbarItem>
-                <Button
-                  onPress={async () => {
-                    await router.push("/profile");
-                  }}
-                >
-                  My Profile
-                </Button>
-              </NavbarItem> */}
             </>
           )}
+          <NavbarItem>
+            <Button
+              as={"a"}
+              href="https://github.com/bug-busterss/snippy"
+              target="_blank"
+            >
+              <GithubIcon />
+            </Button>
+          </NavbarItem>
         </NavbarContent>
       </Navbar>
       <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />

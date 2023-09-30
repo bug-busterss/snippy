@@ -8,6 +8,8 @@ import LoginModal from "../components/modals/login-modal";
 export default function NotFoundPage() {
   const user = useUser();
   const loginModal = useDisclosure();
+  const signupModal = useDisclosure();
+
   return (
     <>
       <main className="flex h-screen w-full flex-col items-center justify-center bg-black">
@@ -21,11 +23,11 @@ export default function NotFoundPage() {
         <h1 className="mb-6 text-4xl font-bold">404</h1>
 
         <p className="mb-6 text-xl">
-          {user ? `you logged in as {user.email}` : `you are not logged in`}
+          {user ? `you logged in as ${user.email}` : `you are not logged in`}
         </p>
 
-        {!user ? (
-          <Button href="/snips" as={Link} color="primary" className=" w-56">
+        {user ? (
+          <Button href="/profile" as={Link} color="primary" className=" w-56">
             Your snips
           </Button>
         ) : (
@@ -37,7 +39,7 @@ export default function NotFoundPage() {
           Go to dashboard
         </Button>
 
-        <LoginModal {...loginModal} />
+        <LoginModal {...loginModal} openSignUpModal={signupModal.onOpen} />
       </main>
     </>
   );

@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/router";
 import { githubDark } from "@uiw/codemirror-theme-github";
 
-function EditSnips(props) {
+function EditSnips() {
   const [visibility, setVisibility] = useState<Selection>(new Set(["public"]));
   const [language, setLanguage] = useState<Selection>(new Set(["javascript"]));
   const [code, setCode] = useState("");
@@ -46,7 +46,7 @@ function EditSnips(props) {
   const { mutate } = api.protectedSnip.update.useMutation({
     onSuccess: (data) => {
       console.log(data);
-      toast.success("Snip Created");
+      toast.success("Snip Updated");
     },
 
     onError: (error) => {
@@ -68,10 +68,11 @@ function EditSnips(props) {
         slug,
       });
     }
+    void router.push(`/s/${slug}`);
   }
 
   return (
-    <main className="flex h-full w-full flex-col gap-4 bg-background p-8">
+    <main className="flex h-full w-full flex-col gap-4 bg-default-50 p-8">
       <Input
         type="text"
         value={title}

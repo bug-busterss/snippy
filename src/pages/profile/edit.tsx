@@ -1,16 +1,47 @@
 import Layout from "@/components/layout";
 import { Button, Input } from "@nextui-org/react";
-import { useUser } from "@supabase/auth-helpers-react";
+import {
+  type User,
+  useSupabaseClient,
+  useUser,
+} from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
-export default function Edit() {
+export default function EditPage() {
   const user = useUser();
 
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  if (!user) return <p>no user found</p>;
+
+  return <Edit user={user} />;
+}
+
+function Edit({ user }: { user: User }) {
+  const supabaseClient = useSupabaseClient();
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState<string>(user.user_metadata.name as string);
+
   return (
-    <form className="flex  h-full justify-center overflow-auto bg-gradient-to-b from-[#2e026d] to-[#15162c] px-[80px] py-[120px]">
+    <form
+      className="flex h-full justify-center overflow-auto bg-default-50 px-[80px] py-[120px]"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        if (email?.trim() === "" || name?.trim() === "") return;
+        await supabaseClient.auth.updateUser({
+          email,
+          data: { name },
+        });
+        setIsLoading(false);
+        toast.success("Profile Updated");
+        await router.push("/profile");
+      }}
+    >
       <div className="flex w-[50%]  flex-col items-center gap-6">
         <h1 className="text-4xl font-bold">Edit Profile</h1>
         <Input
@@ -20,8 +51,8 @@ export default function Edit() {
           label="Username"
           labelPlacement={"outside"}
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           className="outline-none"
@@ -30,12 +61,14 @@ export default function Edit() {
           label="Email Address"
           labelPlacement={"outside"}
           placeholder="your@email.com"
-          defaultValue={user?.email}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Button
           className="border-none bg-white text-black hover:text-slate-200"
           variant="ghost"
+          type="submit"
+          isLoading={isLoading}
         >
           Save Changes{" "}
         </Button>
@@ -44,6 +77,6 @@ export default function Edit() {
   );
 }
 
-Edit.getLayout = (page: React.ReactElement) => {
+EditPage.getLayout = (page: React.ReactElement) => {
   return <Layout>{page}</Layout>;
 };

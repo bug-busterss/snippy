@@ -34,7 +34,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <NextUIProvider>
         <ThemeProvider attribute="class" defaultTheme="dark">
           <main className="bg-background text-foreground dark">
-            <Toaster />
             {getLayout(<Component {...pageProps} />)}
             <Toaster position="bottom-right" reverseOrder={false} />
           </main>
