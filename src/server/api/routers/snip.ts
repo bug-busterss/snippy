@@ -103,12 +103,12 @@ export const snip = createTRPCRouter({
           message: "You are not authorized to view this snip",
         });
       }
-      if (ctx.user && data.userId !== ctx.user.id) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "You are not authorized to view this snip",
-        });
-      }
+      // if (ctx.user && data.userId !== ctx.user.id) {
+      //   throw new TRPCError({
+      //     code: "UNAUTHORIZED",
+      //     message: "You are not authorized to view this snip",
+      //   });
+      // }
 
       return data;
     }),
